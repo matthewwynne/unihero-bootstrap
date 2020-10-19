@@ -1,18 +1,51 @@
 <template>
   <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <carousel class="mb-5"/>
+    <b-container fluid="md"><jumbotron/></b-container>
+    <b-container class="bv-example-row mb-3">
+      <b-row cols="3">
+        <b-col><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit,
+          sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+          Odio aenean sed adipiscing diam donec adipiscing. Consequat id porta
+          nibh venenatis cras.</p></b-col>
+        <b-col><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit,
+          sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+          Odio aenean sed adipiscing diam donec adipiscing. Consequat id porta
+          nibh venenatis cras.</p></b-col>
+        <b-col><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit,
+          sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+          Odio aenean sed adipiscing diam donec adipiscing. Consequat id porta
+          nibh venenatis cras.</p></b-col>
+      </b-row>
+    </b-container>
+    <b-container >
+      <br>
+      <b-row cols="3">
+        <b-col>C 2020 - 2021</b-col>
+        <b-col>Site map</b-col>
+        <b-col>
+          <font-awesome-icon :icon="['fab', 'twitter-square']" size="3x"></font-awesome-icon>
+          <br>
+          <font-awesome-icon :icon="['fab', 'facebook-square']" size="3x"></font-awesome-icon>
+          <br>
+          <font-awesome-icon :icon="['fab', 'instagram-square']" size="3x"></font-awesome-icon>
+        </b-col>
+      </b-row>
+      </b-container>
+    <br>
   </div>
 </template>
 
 <script>
 // @ is an alias to /src
-import HelloWorld from '@/components/HelloWorld.vue';
+import carousel from '@/components/carousel.vue';
+import jumbotron from '@/components/jumbotron.vue';
 
 export default {
   name: 'Home',
   components: {
-    HelloWorld,
+    jumbotron,
+    carousel,
   },
 };
 </script>

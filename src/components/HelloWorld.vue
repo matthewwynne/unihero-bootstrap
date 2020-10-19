@@ -7,6 +7,12 @@
       <a href="https://cli.vuejs.org" target="_blank" rel="noopener">vue-cli documentation</a>.
     </p>
     <h3>Installed CLI Plugins</h3>
+    <div>
+      <b-button>Button</b-button>
+      <b-button variant="danger">Button</b-button>
+      <b-button variant="success">Button</b-button>
+      <b-button variant="outline-primary">Button</b-button>
+    </div>
     <ul>
       <li><a href="https://github.com/vuejs/vue-cli/tree/dev/packages/%40vue/cli-plugin-babel" target="_blank" rel="noopener">babel</a></li>
       <li><a href="https://github.com/vuejs/vue-cli/tree/dev/packages/%40vue/cli-plugin-router" target="_blank" rel="noopener">router</a></li>
