@@ -6,7 +6,7 @@
       Odio aenean sed adipiscing diam donec adipiscing.
       Consequat id porta nibh venenatis cras.</p>
     <!-- Actions -->
-    <b-progress :value="progress" variant=info animated="true"
+    <b-progress :value="progress" variant=info animated=animated
     striped="striped" class="mt-3" height="1.5rem" show-progress></b-progress>
       <br>
       <form-collect-marks v-if="currentStepNumber === 1"/>
@@ -48,6 +48,7 @@ export default {
       currentStepNumber: 1,
       currentStepPercentage: 50,
       length: 4,
+      animated: true,
       form: {
         email: '',
         name: '',

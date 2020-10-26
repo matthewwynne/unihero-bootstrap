@@ -1,5 +1,6 @@
 <template>
   <div class="home">
+    <myNavBar></myNavBar>
     <carousel class="mb-5"/>
     <b-container fluid="md"><jumbotron/></b-container>
     <b-container class="bv-example-row mb-3">
@@ -40,12 +41,18 @@
 // @ is an alias to /src
 import carousel from '@/components/carousel.vue';
 import jumbotron from '@/components/jumbotron.vue';
+import myNavBar from '@/components/myNavBar.vue';
 
 export default {
   name: 'Home',
+  data() {
+    return {
+    };
+  },
   components: {
     jumbotron,
     carousel,
+    myNavBar,
   },
 };
 </script>
