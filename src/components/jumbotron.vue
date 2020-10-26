@@ -8,9 +8,6 @@
         Use our unique scoring metric to better understand which courses work for you
       </p>
       <router-link class="btn btn-light mb-2" to="/getStarted">GET STARTED</router-link>
-      <form action="https://chats.landbot.io/v3/H-727482-ANXZ2Q61U8GNRRKX/index.html">
-        <button type="action" class="btn btn-light">GET STARTED</button>
-      </form>
     </b-jumbotron>
   </div>
 </template>
