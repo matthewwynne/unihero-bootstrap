@@ -1,6 +1,6 @@
 <template>
   <div class="home">
-    <myNavBar></myNavBar>
+    <my-nav-bar></my-nav-bar>
     <carousel class="mb-5"/>
     <b-container fluid="md"><jumbotron/></b-container>
     <b-container class="bv-example-row mb-3">
@@ -34,7 +34,7 @@
       </b-row>
       </b-container>
     <br>
-  </div>
+    </div>
 </template>
 
 <script>
@@ -47,6 +47,7 @@ export default {
   name: 'Home',
   data() {
     return {
+
     };
   },
   components: {
@@ -56,3 +57,6 @@ export default {
   },
 };
 </script>
+<style>
+
+</style>

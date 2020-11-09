@@ -38,6 +38,11 @@ const routes = [
     name: 'Register',
     component: () => import(/* webpackChunkName: "dashboard" */ '../views/Register.vue'),
   },
+  {
+    path: '/finishsignup',
+    name: 'FinishSignUp',
+    component: () => import(/* webpackChunkName: "dashboard" */ '../views/FinishSignUp.vue'),
+  },
 ];
 
 const router = new VueRouter({

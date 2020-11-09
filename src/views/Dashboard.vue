@@ -2,42 +2,67 @@
   <div class="Dashboard">
     <myNavBar></myNavBar>
     <br>
-<!--    <h1>Well Done {{ person['fields']['name'] }}</h1>-->
-    <span v-if="loggedIn">Yes</span>
-    <span v-else>No</span>
-    <b-btn @click="signOut">Sign Out</b-btn>
-    <div v-if=loggedIn class="container">
-      <div>
-        <p>Great Work! {{ name }} Your UNIHero score is
-          {{ uniheroStudent['fields']['APS_score'] }}</p>
-        <p>These results could get you into the following</p>
-
-     </div>
-      <ul class="list-group">
-        <li class="list-group-item" v-for="(item, index) in items" :key="index">
-          <div class="card">
+    <div class="container" v-if=loggedIn>
+      <div class="row">
+        <div class="col-sm-8">
+          <h1>Great Work! Your UNIHero score is
+            {{ uniheroStudent['fields']['UNIHero_score'] }}</h1>
+        </div>
+        <div class="col-sm-2">
+          <b-dropdown size="sm" class="m-md-2 dropdown"
+                      id="dropdown-1" text="UNIHero Fit">
+            <b-dropdown-item>Location</b-dropdown-item>
+            <b-dropdown-item>Degree</b-dropdown-item>
+            <b-dropdown-item>xxx</b-dropdown-item>
+          </b-dropdown>
+        </div>
+        <div class="col-sm-2">
+          <b-btn size="sm" class="m-md-2" @click="signOut">Sign Out</b-btn>
+        </div>
+      </div>
+    </div>
+    <div class="container">
+      <div class="row">
+        <div class="mt-5 col" v-for="(item, index) in items" :key="index">
+          <div id="card" class="card h-100" style="width: 18rem;">
+            <img src="../assets/images/university/UWC/UWC_3.jpg"
+                 class="card-img-top"
+                 alt=""/>
             <div class="card-body">
-              <h5 class="card-title">{{ item['fields']['University'] }}</h5>
-              <h5 class="card-title">{{ item['fields']['Faculties'] }}</h5>
-              <h5 class="card-title">{{ item['fields']['Qualification'] }}</h5>
-              <h5 class="card-title">NBT required? {{ item['fields']['NBT required?'] }}</h5>
-              <p>
-                {{ item['fields']['Requirements Comments'] }}
-              </p>
-              <a v-bind:href="item['fields']['Prospectus']"
-                 class="btn btn-info">Prospectus</a>
-              <a v-bind:href="item['fields']['Application']"
-                 class="btn btn-info">Application</a>
-              <hr class="my-4">
-              <div class="progress">
+              <h6 class="card-title"><b>{{ item['fields']['Qualification'] }}</b></h6>
+              <h6 class="card-title">{{ item['fields']['University'] }}</h6>
+              <div class="mt-1 progress">
                 <div class="progress-bar progress-bar-striped bg-success"
                      role="progressbar" style="width: 100%" aria-valuenow="100%"
                      aria-valuemin="0" aria-valuemax="100"></div>
               </div>
+              <div>
+                <a v-bind:href="item['fields']['Application']"
+                   class="btn btn-info btn-sm">Website</a>
+                <a v-bind:href="item['fields']['Application']"
+                   class="m-2 btn btn-info btn-sm">Call Me Back</a>
+              </div>
             </div>
           </div>
-        </li>
-      </ul>
+        </div>
+      </div>
+      <div class="mt-5 col">
+        <b-card
+          title="See more"
+          img-src="https://www.mindsightcollective.com/wp-content/uploads/2019/04/more-pics-button-1.jpg"
+          img-alt="Image"
+          img-top
+          tag="article"
+          style="max-width: 18rem;"
+          class="mb-2 h-100"
+        >
+          <b-card-text>
+            If you'd like to see more options, we need s few more details.
+          </b-card-text>
+
+          <b-button href="#" class="m-2 btn btn-info btn-sm">View More</b-button>
+        </b-card>
+      </div>
     </div>
   </div>
 </template>
@@ -57,8 +82,8 @@ export default {
       email: '',
       emailVerified: false,
       loggedIn: false,
-      airtableRecordID: '',
       uniheroStudent: [],
+      image: '../assets/images/university/UWC/UWC_3.jpg',
     };
   },
   components: {
@@ -75,6 +100,9 @@ export default {
     this.loadItemsFromAT();
   },
   methods: {
+    getImgUrl(item) {
+      return (`../assets/images/university/${item}`);
+    },
     getUserProfile() {
       const user = firebase.auth().currentUser;
       if (user != null) {
@@ -87,22 +115,22 @@ export default {
       // Init variables
       const appId = 'appStZ5HUKWw7DEVw';
       const appKey = 'keyA8c9MG96tCi522';
+      const airtableConfig = { headers: { Authorization: `Bearer ${appKey}` } };
+      // Logged in users email address collected from Firebase
       const encodedUserEmail = encodeURIComponent(this.email);
+      // URLS for the AT person and university
       const atURLEmail = `https://api.airtable.com/v0/${appId}/person?fields%5B%5D=airtable_id&filterByFormula=search(%22${encodedUserEmail}%22%2C+email)`;
       const atURLPerson = `https://api.airtable.com/v0/${appId}/person/`;
-      const atConfig = { headers: { Authorization: `Bearer ${appKey}` } };
-      this.person = [];
-      this.persontwo = [];
-      axios.get(atURLEmail, atConfig).then((response) => {
-        this.person = response.data.records;
-        console.log(this.person);
-        this.airtableRecordID = this.person[0].id;
-        const atURLPersonNew = atURLPerson.concat(this.person[0].id);
-        console.log(atURLPersonNew);
-        axios.get(atURLPersonNew, atConfig).then((responsetwo) => {
-          this.persontwo = responsetwo.data;
-          this.uniheroStudent = responsetwo.data;
-          console.log(this.uniheroStudent);
+      // UserATID is used for the record id
+      this.userATID = [];
+      // Get request to find the AT ID
+      axios.get(atURLEmail, airtableConfig).then((responseID) => {
+        this.userATID = responseID.data.records;
+        // Person url updated with record ID
+        const atURLPersonNew = atURLPerson.concat(this.userATID[0].id);
+        // Get Users details from AT
+        axios.get(atURLPersonNew, airtableConfig).then((responseUserDetails) => {
+          this.uniheroStudent = responseUserDetails.data;
         }).catch((error) => {
           console.log(error);
         });
@@ -110,28 +138,10 @@ export default {
         console.log(error);
       });
     },
-    loadPersonDetailsFromAT() {
-      // Init variables
-      const appId = 'appStZ5HUKWw7DEVw';
-      const appKey = 'keyA8c9MG96tCi522';
-      this.person = [];
-      console.log(`start of loadPersonDetailsFromAT method + ${this.airtableRecordID}`);
-      axios.get(
-        `https://api.airtable.com/v0/${appId}/person/${this.airtableRecordID}`,
-        {
-          headers: { Authorization: `Bearer ${appKey}` },
-        },
-      ).then((response) => {
-        this.person = response.data.records;
-        console.log(this.person);
-      }).catch((error) => {
-        console.log(error);
-      });
-    },
     loadItemsFromAT() {
       const appId = 'appStZ5HUKWw7DEVw';
       const appKey = 'keyA8c9MG96tCi522';
-      const atURL = `https://api.airtable.com/v0/${appId}/university`;
+      const atURL = `https://api.airtable.com/v0/${appId}/university?maxRecords=3`;
       const atConfig = { headers: { Authorization: `Bearer ${appKey}` } };
       this.items = [];
       axios.get(atURL, atConfig).then((response) => {
@@ -154,5 +164,8 @@ export default {
 </script>
 
 <style scoped>
-
+.card {
+  float: none;
+  margin: 0 auto 10px;
+}
 </style>
