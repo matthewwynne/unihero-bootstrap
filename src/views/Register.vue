@@ -17,7 +17,7 @@
 <!--        <input type="password" v-model="password" class="form-control"-->
 <!--               id="exampleInputPassword1">-->
 <!--      </div> -->
-      <button type="Register" class="btn btn-info">Register</button>
+      <button type="Register" class="btn">Register</button>
     </form>
   </div>
   </div>
