@@ -7,7 +7,7 @@
       <p>
         Use our unique scoring metric to better understand which courses work for you
       </p>
-      <router-link class="btn btn-light mb-2" to="/getStarted">GET STARTED</router-link>
+      <router-link class="btn btn-light mb-2" to="/getStarted">Get started</router-link>
     </b-jumbotron>
   </div>
 </template>
