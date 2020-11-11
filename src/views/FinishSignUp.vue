@@ -14,7 +14,7 @@ export default {
       email: '',
     };
   },
-  mounted() {
+  created() {
     this.completeSignUp();
   },
   methods: {

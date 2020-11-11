@@ -59,8 +59,7 @@
           <b-card-text>
             If you'd like to see more options, we need s few more details.
           </b-card-text>
-
-          <b-button href="#" class="m-2 btn btn-info btn-sm">View More</b-button>
+          <b-button href="#" class="m-2 btn">View More</b-button>
         </b-card>
       </div>
     </div>
