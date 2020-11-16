@@ -3,7 +3,7 @@
     <!-- <myNavBar></myNavBar> -->
     <!-- <carousel class="mb-5"/> -->
     <!-- <b-container fluid="md"><jumbotron/></b-container> -->
-    <b-container fluid="lg" class="landing landing-nav mb-5 mt-5">
+    <b-container fluid="lg" class="landing landing-nav mt-4">
       <b-row class="mb-5">
         <b-col xs="12" class="landing-navbar">
           <div class="logo"></div>
@@ -12,7 +12,7 @@
       </b-row>
     </b-container>
     <br>
-    <b-container fluid="lg" class="landing landing-row mb-3 mt-5">
+    <b-container fluid="lg" class="landing landing-row mb-3 mt-3">
       <b-row class="mb-5">
         <b-col xs="12" lg="6" class="landing-artwork">
           <div class="one img"></div>
@@ -131,10 +131,13 @@ $fw-light: 300;
   &-center {
     position: relative;
     top: 1em;
-    left: 19%;
+    left: 18%;
     @media (max-width: 768px) {
       top: 1em;
-      left: 15%;
+      left: 36.5%;
+    }
+    @media (max-width: 593px) {
+      left: 19.5%;
     }
   }
 }
@@ -207,7 +210,7 @@ $fw-light: 300;
     }
     @media (max-width: 768px) {
       .img {
-        height: 250px;
+        height: 320px;
       }
     }
   }
