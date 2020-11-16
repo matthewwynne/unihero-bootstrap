@@ -1,68 +1,97 @@
 <template>
-  <div class="Dashboard">
-    <myNavBar></myNavBar>
-    <br>
-    <div class="container" v-if=loggedIn>
-      <div class="row">
-        <div class="col-sm-8">
-          <h1>Great Work! Your UNIHero score is
-            {{ uniheroStudent['fields']['UNIHero_score'] }}</h1>
-        </div>
-        <div class="col-sm-2">
-          <b-dropdown size="sm" class="m-md-2 dropdown"
-                      id="dropdown-1" text="UNIHero Fit">
-            <b-dropdown-item>Location</b-dropdown-item>
-            <b-dropdown-item>Degree</b-dropdown-item>
-            <b-dropdown-item>xxx</b-dropdown-item>
-          </b-dropdown>
-        </div>
-        <div class="col-sm-2">
-          <b-btn size="sm" class="m-md-2" @click="signOut">Sign Out</b-btn>
-        </div>
-      </div>
+  <div class="dashboard pb-5">
+    <div class="logo-bar">
+      <b-container fluid="lg" class="mb-3 mt-3">
+        <b-row class="mt-4">
+          <b-col class="pt-3 pb-3" xs="12">
+            <div @click="goHome" class="logo"></div>
+          </b-col>
+        </b-row>
+      </b-container>
     </div>
-    <div class="container">
-      <div class="row">
-        <div class="mt-5 col" v-for="(item, index) in items" :key="index">
-          <div id="card" class="card h-100" style="width: 18rem;">
-            <img src="../assets/images/university/UWC/UWC_3.jpg"
-                 class="card-img-top"
-                 alt=""/>
-            <div class="card-body">
-              <h6 class="card-title"><b>{{ item['fields']['Qualification'] }}</b></h6>
-              <h6 class="card-title">{{ item['fields']['University'] }}</h6>
-              <div class="mt-1 progress">
-                <div class="progress-bar progress-bar-striped bg-success"
-                     role="progressbar" style="width: 100%" aria-valuenow="100%"
-                     aria-valuemin="0" aria-valuemax="100"></div>
-              </div>
-              <div>
-                <a v-bind:href="item['fields']['Application']"
-                   class="btn btn-info btn-sm">Website</a>
-                <a v-bind:href="item['fields']['Application']"
-                   class="m-2 btn btn-info btn-sm">Call Me Back</a>
+    <span v-if="loggedIn">Yes</span>
+    <span v-else>No</span>
+    <b-btn @click="signOut">Sign Out</b-btn>
+    <div v-if=loggedIn class="container">
+    <b-container fluid="md" class="mb-5 mt-5">
+      <b-row class="mt-5 mb-3">
+        <b-col xs="12" class="score">
+          <p class="heading">Great work!
+            Your Unihero score is {{ uniheroStudent['fields']['UNIHero_score'] }}.</p>
+        </b-col>
+      </b-row>
+      <div class="list-board">
+        <b-row class="mb-5">
+          <b-col xs="12" class="chat">
+            <div class="chat-icon"></div>
+            <div class="chat-bubble">Here are some incredible degrees that
+              match your preferences &amp; marks!</div>
+          </b-col>
+        </b-row>
+        <b-row class="filter mt-3">
+          <b-col xs="12" lg="6">
+            <h5 class="fw-bold">Recommended degrees:</h5>
+          </b-col>
+          <b-col xs="12" lg="6" class="align-right">
+            <label for="colFormLabelSm" class="col-form-label col-form-label-sm">
+              Sort by:</label>
+            <div class="btn-group">
+              <button class="btn btn-secondary btn-sm dropdown-toggle"
+                      type="button" data-toggle="dropdown" aria-haspopup="true"
+                      aria-expanded="false">
+                Likelyhood of acceptance
+              </button>
+              <div class="dropdown-menu">
+                Option 1
               </div>
             </div>
-          </div>
-        </div>
+          </b-col>
+        </b-row>
+        <ul class="list-group">
+          <li class="list-group-item" v-for="(item, index) in items" :key="index">
+            <div class="card">
+              <figure class="figure">
+                <img v-bind:src="item.fields.uni_image"
+                     class="figure-img img-fluid z-depth-1">
+              </figure>
+              <div class="card-body">
+                <div class="progress">
+                  <div class="progress-bar progress-bar-striped bg-success"
+                       role="progressbar" v-bind:style="'width:'
+                       + (uniheroStudent.fields.UNIHero_score/
+                       item.fields.APS_Equivalent)*100 + '%'"
+                       v-bind:aria-valuenow="(uniheroStudent.fields.UNIHero_score/
+                       item.fields.APS_Equivalent)*100"
+                       aria-valuemin="0" v-bind:aria-valuemax="item.fields.APS_Equivalent"></div>
+                </div>
+                <h5 class="card-title">{{ item['fields']['Qualification'] }}</h5>
+                <p class="university">
+                  {{ item['fields']['University'] }}
+                </p>
+                <a class="btn btn-info btn-info-left" v-bind:href="item['fields']['Prospectus']">
+                  Website</a>
+                <a class="btn btn-info btn-info-right">Call Me Back</a>
+              </div>
+            </div>
+          </li>
+          <li class="list-group-item">
+            <div class="card">
+              <figure class="figure">
+                <div class="text">Want to unlock<br>
+                  more suggestions?</div>
+              </figure>
+              <div class="card-body text-center">
+                <p class="info mt-2">Enter your marks so that we<br>
+                  can better suggest more institutions
+                  we believe will work for you!</p>
+                <a class="btn btn-info btn-info-center mt-2 mb-1">Unlock more</a>
+              </div>
+            </div>
+          </li>
+        </ul>
       </div>
-      <div class="mt-5 col">
-        <b-card
-          title="See more"
-          img-src="https://www.mindsightcollective.com/wp-content/uploads/2019/04/more-pics-button-1.jpg"
-          img-alt="Image"
-          img-top
-          tag="article"
-          style="max-width: 18rem;"
-          class="mb-2 h-100"
-        >
-          <b-card-text>
-            If you'd like to see more options, we need s few more details.
-          </b-card-text>
-          <b-button href="#" class="m-2 btn">View More</b-button>
-        </b-card>
-      </div>
-    </div>
+    </b-container>
+    </div>>
   </div>
 </template>
 
@@ -70,10 +99,9 @@
 import axios from 'axios';
 import * as firebase from 'firebase/app';
 import 'firebase/auth';
-import myNavBar from '@/components/myNavBar.vue';
 
 export default {
-  name: 'Home',
+  name: 'dashboard',
   data() {
     return {
       items: [],
@@ -82,11 +110,9 @@ export default {
       emailVerified: false,
       loggedIn: false,
       uniheroStudent: [],
-      image: '../assets/images/university/UWC/UWC_3.jpg',
     };
   },
   components: {
-    myNavBar,
   },
   created() {
     firebase.auth().onAuthStateChanged((user) => {
@@ -99,8 +125,8 @@ export default {
     this.loadItemsFromAT();
   },
   methods: {
-    getImgUrl(item) {
-      return (`../assets/images/university/${item}`);
+    goHome() {
+      this.$router.replace({ name: 'Home' });
     },
     getUserProfile() {
       const user = firebase.auth().currentUser;
@@ -140,7 +166,7 @@ export default {
     loadItemsFromAT() {
       const appId = 'appStZ5HUKWw7DEVw';
       const appKey = 'keyA8c9MG96tCi522';
-      const atURL = `https://api.airtable.com/v0/${appId}/university?maxRecords=3`;
+      const atURL = `https://api.airtable.com/v0/${appId}/university?maxRecords=5`;
       const atConfig = { headers: { Authorization: `Bearer ${appKey}` } };
       this.items = [];
       axios.get(atURL, atConfig).then((response) => {
@@ -162,9 +188,240 @@ export default {
 };
 </script>
 
-<style scoped>
-.card {
-  float: none;
-  margin: 0 auto 10px;
+<style scoped lang="scss">
+$color-navy-blue: #0B0754;
+$color-navy-blue-light: #3b3875;
+$color-turquoise: #00F7C1;
+$shadow-color: #c5cfd7;
+$fw-bold: 700;
+
+@mixin box-shadow($value) {
+  -webkit-box-shadow: $value;
+  -moz-box-shadow: $value;
+  box-shadow: $value;
+}
+
+.logo-bar {
+  background-color: white;
+  .logo {
+    background-image: url('~@/assets/images/unihero-logo-01.svg');
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
+    height: 45px;
+    width: 190px;
+    display: inline-flex;
+    @media (max-width: 768px) {
+      width: 180px;
+    }
+  }
+}
+
+.dashboard {
+  background-color: #E0E6EC;
+
+  .score {
+    .heading {
+      font-size: 3em;
+      font-weight: $fw-bold;
+      @media (max-width: 593px) {
+        font-size: 1.7em;
+      }
+    }
+  }
+
+  .list-board {
+    background-color: white;
+    border: 4px solid #c5cfd7;
+    padding: 3em 4em;
+    overflow: hidden;
+    @media (max-width: 593px) {
+      padding: 3em 2em;
+    }
+    .chat {
+      position: relative;
+      left: 80px;
+      &-icon {
+        background-image: url('~@/assets/images/unihero-chat-icon.png');
+        width: 45px;
+        height: 45px;
+        background-size: contain;
+        background-repeat: no-repeat;
+        display: inline-flex;
+        position: absolute;
+        left: -60px;
+        bottom: 15px;
+      }
+      &-bubble {
+        background-color: $color-navy-blue;
+        color: white;
+        padding: .7em .9em;
+        margin-bottom: 15px;
+        width: 77%;
+        border-radius: 6px;
+        border-bottom-left-radius: 0;
+        display: inline-flex;
+        text-align: left;
+        font-size: 1.25em;
+        @media (max-width: 768px) {
+          width: 80%;
+        }
+        @media (max-width: 593px) {
+          font-size: .8em;
+          width: 68%;
+        }
+      }
+    }
+    .filter {
+      @media (max-width: 991px) {
+        text-align: center;
+        .align-right{
+          text-align: center !important;
+        }
+      }
+      .align-right{
+        text-align: right;
+      }
+      h5 {
+        font-weight: $fw-bold;
+        font-size: 1.5rem;
+        @media (max-width: 593px) {
+          font-size: 1.2rem;
+        }
+      }
+      .col-form-label {
+        margin-right: .8rem !important;
+      }
+      .dropdown-toggle{
+        color: $color-navy-blue;
+        background-color: white;
+        border: 2px solid $color-navy-blue;
+        padding: 0.15rem 0.5rem;
+        border-radius: 5px;
+        &:after {
+          display: none !important;
+        }
+      }
+    }
+    .list-group {
+      display: inline;
+      &-item {
+        border: none;
+        display: inline-block;
+        padding: 1.5rem 0;
+        width: 28%;
+        margin-right: 75px;
+        &:nth-child(3n) {
+          margin-right: 0;
+        }
+        @media (max-width: 1195px) {
+          width: 45%;
+          &:nth-child(2n) {
+            margin-right: 0 !important;
+          }
+          &:nth-child(3n) {
+            margin-right: 75px;
+          }
+          .text {
+            left: 21% !important;
+          }
+        }
+        @media (max-width: 991px) {
+          width: 60%;
+          position: relative;
+          left: 20%;
+        }
+        @media (max-width: 593px) {
+          width: 100%;
+          position: relative;
+          left: 0;
+          .text {
+            left: 13% !important;
+          }
+        }
+      }
+
+      .card {
+        @include box-shadow(0 0 .25em .25em rgba($shadow-color, .3));
+        border: none;
+        .figure {
+          background-color: $color-navy-blue;
+          overflow: hidden;
+          height: 135px;
+          position: relative;
+          margin-bottom: 0;
+          border-top-left-radius: 0.20rem;
+          border-top-right-radius: 0.20rem;
+          &-img {
+            max-width: 130%;
+            position: absolute;
+            left: -15%;
+            top: -22%;
+          }
+          .text {
+            font-weight: $fw-bold;
+            font-size: 1.3em;
+            line-height: 1.3;
+            text-align: center;
+            color: white;
+            position: absolute;
+            top: 28%;
+            left: 13%;
+          }
+        }
+        &-body {
+          padding: .9rem;
+          .progress {
+            background-color: white;
+            border: 1px solid $color-turquoise;
+            height: .65rem;
+            border-radius: 0.15rem;
+            margin-bottom: 0.75rem;
+            &-bar {
+              background-color: $color-turquoise !important;
+              background-image: none;
+            }
+          }
+          .university {
+            font-size: .8em;
+            font-weight: $fw-bold;
+          }
+          .info {
+            font-size: .8em;
+            font-weight: $fw-bold;
+            text-align: center;
+            line-height: 1.57;
+          }
+          .btn-info-center {
+            font-size: 1rem !important;
+            font-weight: $fw-bold;
+          }
+          .btn-info {
+            background-color: $color-navy-blue;
+            border-color: $color-navy-blue;
+            border-radius: .30rem;
+            padding: 0rem 1.5rem .1rem;
+            font-size: .7rem;
+            line-height: 1.7;
+            &-left {
+              float: left;
+            }
+            &-right {
+              float: right;
+            }
+            &:hover {
+              background-color: $color-navy-blue-light;
+              border-color: $color-navy-blue-light;
+            }
+          }
+        }
+        &-title {
+          font-weight: $fw-bold;
+          line-height: 1;
+          margin-bottom: 0.45rem;
+        }
+      }
+    }
+  }
 }
 </style>

@@ -11,3 +11,15 @@ export default {
   },
 };
 </script>
+
+<style lang="scss">
+$color-navy-blue: #0B0754;
+
+#app {
+  font-family: 'Montserrat', Arial, Helvetica, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  color: $color-navy-blue;
+}
+
+</style>

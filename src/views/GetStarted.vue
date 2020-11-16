@@ -1,7 +1,5 @@
 <template>
   <div class="GetStarted">
-    <b-container>
-    </b-container>
   </div>
 </template>
 
@@ -9,6 +7,11 @@
 
 export default {
   name: 'GetStarted',
+  data() {
+    return {
+      email: '',
+    };
+  },
   components: {
   },
   methods: {
@@ -30,8 +33,13 @@ export default {
         });
     },
   },
-  mounted() {
+  created() {
     this.landbot();
+  },
+  watch: {
+    email() {
+      console.log(this.email);
+    },
   },
 };
 </script>
