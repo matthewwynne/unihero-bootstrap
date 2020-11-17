@@ -50,7 +50,7 @@
         </b-col>
         <b-col xs="12" lg="6" class="landing-content p-lr-5">
           <h3 class="fw-7">How much does it cost?</h3>
-          <h4 class="fw-7">It’s free, and theres more!</h4>
+          <h4 class="fw-7">It’s free, and there's more!</h4>
           <p class="large mb-5">As part of the Unihero community you will get discounts on all
              things study related, events, fashion, technology and even your degree!</p>
           <router-link class="btn btn-light mb-2" to="">Join our community</router-link>
