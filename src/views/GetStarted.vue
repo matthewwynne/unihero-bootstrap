@@ -22,7 +22,7 @@ export default {
           const bot = document.createElement('script');
           bot.innerHTML = 'var myLandbot = new Landbot.Fullpage'
             // + 'container: \'#myLandbot\','
-            + '({ configUrl: \'https://chats.landbot.io/v3/H-727482-ANXZ2Q61U8GNRRKX/index.json\''
+            + '({ configUrl: \'https://chats.landbot.io/v3/H-758082-PQLP9SF1JBEOABM8/index.json\''
             + ',});';
           bot.async = true;
           document.body.appendChild(bot);

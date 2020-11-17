@@ -9,9 +9,9 @@
         </b-row>
       </b-container>
     </div>
-    <span v-if="loggedIn">Yes</span>
-    <span v-else>No</span>
-    <b-btn @click="signOut">Sign Out</b-btn>
+<!--    <span v-if="loggedIn">Yes</span>-->
+<!--    <span v-else>No</span>-->
+<!--    <b-btn @click="signOut">Sign Out</b-btn>-->
     <div v-if=loggedIn class="container">
     <b-container fluid="md" class="mb-5 mt-5">
       <b-row class="mt-5 mb-3">
@@ -62,7 +62,7 @@
                        item.fields.APS_Equivalent)*100 + '%'"
                        v-bind:aria-valuenow="(uniheroStudent.fields.UNIHero_score/
                        item.fields.APS_Equivalent)*100"
-                       aria-valuemin="0" v-bind:aria-valuemax="item.fields.APS_Equivalent"></div>
+                       aria-valuemin="0" aria-valuemax="49"></div>
                 </div>
                 <h5 class="card-title">{{ item['fields']['Qualification'] }}</h5>
                 <p class="university">
