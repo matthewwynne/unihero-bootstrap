@@ -17,7 +17,7 @@
       <b-row class="mt-5 mb-3">
         <b-col xs="12" class="score">
           <p class="heading">Great work!
-            Your Unihero score is {{ uniheroStudent['fields']['UNIHero_score'] }}.</p>
+            Your Unihero score is {{ uniheroStudent['fields']['UNIHeroScore'] }}.</p>
         </b-col>
       </b-row>
       <div class="list-board">
@@ -47,7 +47,7 @@
             </div>
           </b-col>
         </b-row>
-        <ul class="list-group">
+        <ul v-if="!isFetching" class="list-group">
           <li class="list-group-item" v-for="(item, index) in items" :key="index">
             <div class="card">
               <figure class="figure">
@@ -58,11 +58,14 @@
                 <div class="progress">
                   <div class="progress-bar progress-bar-striped bg-success"
                        role="progressbar" v-bind:style="'width:'
-                       + (uniheroStudent.fields.UNIHero_score/
-                       item.fields.APS_Equivalent)*100 + '%'"
-                       v-bind:aria-valuenow="(uniheroStudent.fields.UNIHero_score/
-                       item.fields.APS_Equivalent)*100"
-                       aria-valuemin="0" aria-valuemax="49"></div>
+                       + ((uniheroStudent.fields.UNIHeroScore - item.fields.APS_Equivalent)
+                       /(49 - item.fields.APS_Equivalent)) * 100 + '%'"
+                       v-bind:aria-valuenow="((uniheroStudent.fields.UNIHeroScore
+                       - item.fields.APS_Equivalent)
+                       /(49 - item.fields.APS_Equivalent)) * 100"
+                       aria-valuemin="0"
+                       v-bind:aria-valuemax="(49 - item.fields.APS_Equivalent)">
+                  </div>
                 </div>
                 <h5 class="card-title">{{ item['fields']['Qualification'] }}</h5>
                 <p class="university">
@@ -70,7 +73,9 @@
                 </p>
                 <a class="btn btn-info btn-info-left" v-bind:href="item['fields']['Prospectus']">
                   Website</a>
-                <a class="btn btn-info btn-info-right">Call Me Back</a>
+                <a v-if="!item['fields']['callback']" class="btn btn-info btn-info-right">
+                  Call Me Back
+                </a>
               </div>
             </div>
           </li>
@@ -84,7 +89,9 @@
                 <p class="info mt-2">Enter your marks so that we<br>
                   can better suggest more institutions
                   we believe will work for you!</p>
-                <a class="btn btn-info btn-info-center mt-2 mb-1">Unlock more</a>
+                <a @click=loadItemsFromAT() class="btn btn-info btn-info-center mt-2 mb-1">
+                  Unlock more
+                </a>
               </div>
             </div>
           </li>
@@ -110,6 +117,9 @@ export default {
       emailVerified: false,
       loggedIn: false,
       uniheroStudent: [],
+      isFetching: true,
+      uniheroStudentLocations: [],
+      uniheroStudentIndustry: [],
     };
   },
   components: {
@@ -119,10 +129,9 @@ export default {
       this.loggedIn = !!user;
     });
     this.getUserProfile();
-    this.loadPersonATID();
   },
   mounted() {
-    this.loadItemsFromAT();
+    this.orderedLoadItemsFromAT();
   },
   methods: {
     goHome() {
@@ -136,8 +145,7 @@ export default {
         this.emailVerified = user.emailVerified;
       }
     },
-    loadPersonATID() {
-      // Init variables
+    orderedLoadItemsFromAT() {
       const appId = 'appStZ5HUKWw7DEVw';
       const appKey = 'keyA8c9MG96tCi522';
       const airtableConfig = { headers: { Authorization: `Bearer ${appKey}` } };
@@ -147,33 +155,36 @@ export default {
       const atURLEmail = `https://api.airtable.com/v0/${appId}/person?fields%5B%5D=airtable_id&filterByFormula=search(%22${encodedUserEmail}%22%2C+email)`;
       const atURLPerson = `https://api.airtable.com/v0/${appId}/person/`;
       // UserATID is used for the record id
-      this.userATID = [];
-      // Get request to find the AT ID
-      axios.get(atURLEmail, airtableConfig).then((responseID) => {
-        this.userATID = responseID.data.records;
-        // Person url updated with record ID
-        const atURLPersonNew = atURLPerson.concat(this.userATID[0].id);
-        // Get Users details from AT
-        axios.get(atURLPersonNew, airtableConfig).then((responseUserDetails) => {
-          this.uniheroStudent = responseUserDetails.data;
-        }).catch((error) => {
+      this.items = [];
+      axios
+        .get(atURLEmail, airtableConfig)
+        .then(({ data }) => {
+          const atURLPersonNew = atURLPerson.concat(data.records[0].id);
+          return axios.get(atURLPersonNew, airtableConfig);
+        }).then(({ data }) => {
+          this.uniheroStudent = data;
+          let atUniURL = `https://api.airtable.com/v0/appStZ5HUKWw7DEVw/university?filterByFormula=IF(AND({APS_Equivalent}<=${this.uniheroStudent.fields.UNIHeroScore},OR(`;
+          this.uniheroStudentLocations = data.fields.location.split(',');
+          this.uniheroStudentIndustry = data.fields.industry.split(',');
+          for (let i = 0; i < this.uniheroStudentLocations.length; i += 1) {
+            const str = `{Province}="${this.uniheroStudentLocations[i].trim()}",`;
+            atUniURL = atUniURL.concat(str);
+          }
+          for (let i = 0; i < this.uniheroStudentIndustry.length; i += 1) {
+            const str = `{Industry}="${this.uniheroStudentIndustry[i].trim()}",`;
+            atUniURL = atUniURL.concat(str);
+          }
+          atUniURL = atUniURL.slice(0, -1);
+          atUniURL = atUniURL.concat(')),"true")&maxRecords=5');
+          encodeURI(atUniURL);
+          return axios.get(atUniURL, airtableConfig);
+        }).then((response) => {
+          this.items = response.data.records;
+          this.isFetching = false;
+        })
+        .catch((error) => {
           console.log(error);
         });
-      }).catch((error) => {
-        console.log(error);
-      });
-    },
-    loadItemsFromAT() {
-      const appId = 'appStZ5HUKWw7DEVw';
-      const appKey = 'keyA8c9MG96tCi522';
-      const atURL = `https://api.airtable.com/v0/${appId}/university?maxRecords=5`;
-      const atConfig = { headers: { Authorization: `Bearer ${appKey}` } };
-      this.items = [];
-      axios.get(atURL, atConfig).then((response) => {
-        this.items = response.data.records;
-      }).catch((error) => {
-        console.log(error);
-      });
     },
     async signOut() {
       try {
