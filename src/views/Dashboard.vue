@@ -9,9 +9,7 @@
         </b-row>
       </b-container>
     </div>
-<!--    <span v-if="loggedIn">Yes</span>-->
-<!--    <span v-else>No</span>-->
-<!--    <b-btn @click="signOut">Sign Out</b-btn>-->
+    <div v-if="!loading">
     <div v-if=loggedIn class="container">
     <b-container fluid="md" class="mb-5 mt-5">
       <b-row class="mt-5 mb-3">
@@ -99,6 +97,7 @@
       </div>
     </b-container>
     </div>>
+    </div>
   </div>
 </template>
 
@@ -120,6 +119,7 @@ export default {
       isFetching: true,
       uniheroStudentLocations: [],
       uniheroStudentIndustry: [],
+      loading: true,
     };
   },
   components: {
@@ -163,19 +163,20 @@ export default {
           return axios.get(atURLPersonNew, airtableConfig);
         }).then(({ data }) => {
           this.uniheroStudent = data;
-          let atUniURL = `https://api.airtable.com/v0/appStZ5HUKWw7DEVw/university?filterByFormula=IF(AND({APS_Equivalent}<=${this.uniheroStudent.fields.UNIHeroScore},OR(`;
-          this.uniheroStudentLocations = data.fields.location.split(',');
-          this.uniheroStudentIndustry = data.fields.industry.split(',');
-          for (let i = 0; i < this.uniheroStudentLocations.length; i += 1) {
-            const str = `{Province}="${this.uniheroStudentLocations[i].trim()}",`;
-            atUniURL = atUniURL.concat(str);
-          }
-          for (let i = 0; i < this.uniheroStudentIndustry.length; i += 1) {
-            const str = `{Industry}="${this.uniheroStudentIndustry[i].trim()}",`;
-            atUniURL = atUniURL.concat(str);
-          }
-          atUniURL = atUniURL.slice(0, -1);
-          atUniURL = atUniURL.concat(')),"true")&maxRecords=5');
+          const atUniURL = `https://api.airtable.com/v0/appStZ5HUKWw7DEVw/university?filterByFormula=IF(AND({APS_Equivalent}<=${this.uniheroStudent.fields.UNIHeroScore},{Industry}="${this.uniheroStudent.fields.industry}",{Province}="${this.uniheroStudent.fields.location}"),"true")&maxRecords=5"`;
+          // this.uniheroStudentLocations = data.fields.location.split(',');
+          // this.uniheroStudentIndustry = data.fields.industry.split(',');
+          // for (let i = 0; i < this.uniheroStudentIndustry.length; i += 1) {
+          //   const str = `{Industry}="${this.uniheroStudentIndustry[i].trim()}",`;
+          //   atUniURL = atUniURL.concat(str);
+          // }
+          // atUniURL = atUniURL.concat('OR(');
+          // for (let i = 0; i < this.uniheroStudentLocations.length; i += 1) {
+          //   const str = `{Province}="${this.uniheroStudentLocations[i].trim()}",`;
+          //   atUniURL = atUniURL.concat(str);
+          // }
+          // atUniURL = atUniURL.slice(0, -1);
+          // atUniURL = atUniURL.concat(')),"true")&maxRecords=5');
           encodeURI(atUniURL);
           return axios.get(atUniURL, airtableConfig);
         }).then((response) => {
@@ -184,7 +185,8 @@ export default {
         })
         .catch((error) => {
           console.log(error);
-        });
+        })
+        .finally(() => { this.loading = false; });
     },
     async signOut() {
       try {
