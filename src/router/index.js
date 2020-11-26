@@ -20,7 +20,7 @@ const routes = [
     meta: { title: 'unihero - about' },
   },
   {
-    path: '/getStarted',
+    path: '/get-started',
     name: 'GetStarted',
     component: () => import(/* webpackChunkName: "getsStarted" */ '../views/GetStarted.vue'),
     meta: { title: 'unihero - get started' },

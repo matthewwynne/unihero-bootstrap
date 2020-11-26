@@ -71,7 +71,7 @@
                 </p>
                 <a class="btn btn-info btn-info-left" v-bind:href="item['fields']['Prospectus']">
                   Website</a>
-                <a v-if="!item['fields']['callback']" class="btn btn-info btn-info-right">
+                <a v-show="item['fields']['callback']" class="btn btn-info btn-info-right">
                   Call Me Back
                 </a>
               </div>
@@ -163,7 +163,7 @@ export default {
           return axios.get(atURLPersonNew, airtableConfig);
         }).then(({ data }) => {
           this.uniheroStudent = data;
-          const atUniURL = `https://api.airtable.com/v0/appStZ5HUKWw7DEVw/university?filterByFormula=IF(AND({APS_Equivalent}<=${this.uniheroStudent.fields.UNIHeroScore},{Industry}="${this.uniheroStudent.fields.industry}",{Province}="${this.uniheroStudent.fields.location}"),"true")&maxRecords=5"`;
+          const atUniURL = `https://api.airtable.com/v0/appStZ5HUKWw7DEVw/university?filterByFormula=IF(AND({APS_Equivalent}<=${this.uniheroStudent.fields.UNIHeroScore},{Industry}="${this.uniheroStudent.fields.industry.trim()}",{Province}="${this.uniheroStudent.fields.location.trim()}"),"true")&maxRecords=5"`;
           // this.uniheroStudentLocations = data.fields.location.split(',');
           // this.uniheroStudentIndustry = data.fields.industry.split(',');
           // for (let i = 0; i < this.uniheroStudentIndustry.length; i += 1) {
