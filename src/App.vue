@@ -23,6 +23,6 @@ $color-light-grey: #E0E6EC;
   -moz-osx-font-smoothing: grayscale;
   color: $color-navy-blue;
   position: relative;
-  min-height: 95vh;
+  min-height: 100vh;
 }
 </style>
