@@ -72,6 +72,7 @@ $color-light-grey: #E0E6EC;
 $fw-bold: 700;
 
 .terms {
+  padding-bottom: 8rem;
   h1 {
     font-weight: $fw-bold;
     font-size: 1.5em;

@@ -78,6 +78,7 @@ $color-light-grey-border: #ced4da;
 $fw-bold: 700;
 
 .contact {
+  padding-bottom: 8rem;
   h1 {
     font-size: 2.3rem;
     font-weight: $fw-bold;

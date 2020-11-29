@@ -122,7 +122,9 @@ $fw-light: 300;
     }
   }
 }
-
+.home {
+  padding-bottom: 8rem;
+}
 .landing {
   overflow: hidden;
   &-nav {
