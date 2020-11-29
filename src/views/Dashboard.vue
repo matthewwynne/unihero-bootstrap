@@ -9,7 +9,7 @@
         </b-row>
       </b-container>
     </div>
-    <div v-if="!loading">
+    <div v-if="!loadingPublics && !loadingPrivates">
     <div v-if="loggedIn && emailVerified" class="container">
     <b-container fluid="md" class="mb-5 mt-5">
       <b-row class="mt-5 mb-3">
@@ -45,7 +45,41 @@
             </div>
           </b-col>
         </b-row>
-        <ul v-if="!isFetching" class="list-group">
+        <ul class="list-group">
+          <li class="list-group-item" v-for="(item, index) in publicItems" :key="index">
+            <div class="card">
+              <figure class="figure">
+                <img v-bind:src="item.fields.uni_image"
+                     class="figure-img img-fluid z-depth-1">
+              </figure>
+              <div class="card-body">
+                <div class="progress">
+                  <div class="progress-bar progress-bar-striped bg-success"
+                       role="progressbar" v-bind:style="'width:'
+                       + ((uniheroStudent.fields.UNIHeroScore - item.fields.APS_Equivalent)
+                       /(49 - item.fields.APS_Equivalent)) * 100 + '%'"
+                       v-bind:aria-valuenow="((uniheroStudent.fields.UNIHeroScore
+                       - item.fields.APS_Equivalent)
+                       /(49 - item.fields.APS_Equivalent)) * 100"
+                       aria-valuemin="0"
+                       v-bind:aria-valuemax="(49 - item.fields.APS_Equivalent)">
+                  </div>
+                </div>
+                <h5 class="card-title">{{ item['fields']['Qualification'] }}</h5>
+                <p class="university">
+                  {{ item['fields']['University'] }}
+                </p>
+                <div class="cta">
+                  <a class="btn btn-info btn-info-left"
+                     v-bind:href="item['fields']['Application']">
+                    Website</a>
+                  <a v-show="item['fields']['callback']" class="btn btn-info btn-info-right">
+                    Call Back
+                  </a>
+                </div>
+              </div>
+            </div>
+          </li>
           <li class="list-group-item" v-for="(item, index) in items" :key="index">
             <div class="card">
               <figure class="figure">
@@ -71,7 +105,7 @@
                 </p>
                 <div class="cta">
                   <a class="btn btn-info btn-info-left"
-                       v-bind:href="item['fields']['Prospectus']">
+                       v-bind:href="item['fields']['Application']">
                     Website</a>
                   <a v-show="item['fields']['callback']" class="btn btn-info btn-info-right">
                     Call Back
@@ -121,6 +155,7 @@
         </div>
       </div>
     </div>
+    <myFooter></myFooter>
   </div>
 </template>
 
@@ -128,24 +163,28 @@
 import axios from 'axios';
 import * as firebase from 'firebase/app';
 import 'firebase/auth';
+import myFooter from '@/components/myFooter.vue';
 
 export default {
   name: 'dashboard',
   data() {
     return {
       items: [],
+      publicItems: [],
       name: '',
       email: '',
       emailVerified: false,
       loggedIn: false,
       uniheroStudent: [],
-      isFetching: true,
+      // isFetching: true,
       uniheroStudentLocations: [],
       uniheroStudentIndustry: [],
-      loading: true,
+      loadingPublics: true,
+      loadingPrivates: true,
     };
   },
   components: {
+    myFooter,
   },
   created() {
     firebase.auth().onAuthStateChanged((user) => {
@@ -154,7 +193,8 @@ export default {
     this.getUserProfile();
   },
   mounted() {
-    this.orderedLoadItemsFromAT();
+    this.publicUniversityFromAT();
+    this.privateUniversityFromAT();
   },
   methods: {
     goHome() {
@@ -168,7 +208,7 @@ export default {
         this.emailVerified = user.emailVerified;
       }
     },
-    orderedLoadItemsFromAT() {
+    publicUniversityFromAT() {
       const appId = 'appStZ5HUKWw7DEVw';
       const appKey = 'keyA8c9MG96tCi522';
       const airtableConfig = { headers: { Authorization: `Bearer ${appKey}` } };
@@ -186,7 +226,7 @@ export default {
           return axios.get(atURLPersonNew, airtableConfig);
         }).then(({ data }) => {
           this.uniheroStudent = data;
-          const atUniURL = `https://api.airtable.com/v0/appStZ5HUKWw7DEVw/university?filterByFormula=IF(AND({APS_Equivalent}<=${this.uniheroStudent.fields.UNIHeroScore},{Industry}="${this.uniheroStudent.fields.industry.trim()}",{Province}="${this.uniheroStudent.fields.location.trim()}"),"true")&maxRecords=5"`;
+          const atUniURL = `https://api.airtable.com/v0/appStZ5HUKWw7DEVw/university?filterByFormula=IF(AND({APS_Equivalent}<=${this.uniheroStudent.fields.UNIHeroScore},{Industry}="${this.uniheroStudent.fields.industry.trim()}",{Province}="${this.uniheroStudent.fields.location.trim()}"),"true")&maxRecords=3"`;
           // this.uniheroStudentLocations = data.fields.location.split(',');
           // this.uniheroStudentIndustry = data.fields.industry.split(',');
           // for (let i = 0; i < this.uniheroStudentIndustry.length; i += 1) {
@@ -204,12 +244,56 @@ export default {
           return axios.get(atUniURL, airtableConfig);
         }).then((response) => {
           this.items = response.data.records;
-          this.isFetching = false;
+          // this.isFetching = false;
         })
         .catch((error) => {
           console.log(error);
         })
-        .finally(() => { this.loading = false; });
+        .finally(() => { this.loadingPublics = false; });
+    },
+    privateUniversityFromAT() {
+      const appId = 'appStZ5HUKWw7DEVw';
+      const appKey = 'keyA8c9MG96tCi522';
+      const airtableConfig = { headers: { Authorization: `Bearer ${appKey}` } };
+      // Logged in users email address collected from Firebase
+      const encodedUserEmail = encodeURIComponent(this.email);
+      // URLS for the AT person and university
+      const atURLEmail = `https://api.airtable.com/v0/${appId}/person?fields%5B%5D=airtable_id&filterByFormula=search(%22${encodedUserEmail}%22%2C+email)`;
+      const atURLPerson = `https://api.airtable.com/v0/${appId}/person/`;
+      // UserATID is used for the record id
+      this.publicItems = [];
+      axios
+        .get(atURLEmail, airtableConfig)
+        .then(({ data }) => {
+          const atURLPersonNew = atURLPerson.concat(data.records[0].id);
+          return axios.get(atURLPersonNew, airtableConfig);
+        }).then(({ data }) => {
+          this.uniheroStudent = data;
+          // const atUniURL = `https://api.airtable.com/v0/appStZ5HUKWw7DEVw/university?filterByFormula=IF(AND({APS_Equivalent}<=${this.uniheroStudent.fields.UNIHeroScore},{Industry}="${this.uniheroStudent.fields.industry.trim()}",{Province}="${this.uniheroStudent.fields.location.trim()}"),"true")&maxRecords=5"`;
+          const atUniURL = `https://api.airtable.com/v0/appStZ5HUKWw7DEVw/privates?filterByFormula=IF(AND({APS_Equivalent}<=${this.uniheroStudent.fields.UNIHeroScore},{Industry}="${this.uniheroStudent.fields.industry.trim()}",find("${this.uniheroStudent.fields.location.trim()}",Province)),"true")&maxRecords=3&sort[0][field]=University&sort[0][direction]=asc`;
+          // this.uniheroStudentLocations = data.fields.location.split(',');
+          // this.uniheroStudentIndustry = data.fields.industry.split(',');
+          // for (let i = 0; i < this.uniheroStudentIndustry.length; i += 1) {
+          //   const str = `{Industry}="${this.uniheroStudentIndustry[i].trim()}",`;
+          //   atUniURL = atUniURL.concat(str);
+          // }
+          // atUniURL = atUniURL.concat('OR(');
+          // for (let i = 0; i < this.uniheroStudentLocations.length; i += 1) {
+          //   const str = `{Province}="${this.uniheroStudentLocations[i].trim()}",`;
+          //   atUniURL = atUniURL.concat(str);
+          // }
+          // atUniURL = atUniURL.slice(0, -1);
+          // atUniURL = atUniURL.concat(')),"true")&maxRecords=5');
+          encodeURI(atUniURL);
+          return axios.get(atUniURL, airtableConfig);
+        }).then((response) => {
+          this.publicItems = response.data.records;
+          // this.isFetching = false;
+        })
+        .catch((error) => {
+          console.log(error);
+        })
+        .finally(() => { this.loadingPrivates = false; });
     },
     forgotPassword() {
       const user = firebase.auth().currentUser;
