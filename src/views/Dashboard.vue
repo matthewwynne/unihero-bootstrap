@@ -1,62 +1,24 @@
 <template>
   <div class="dashboard pb-5">
-    <!-- <myNavBar></myNavBar> -->
     <div class="logo-bar">
       <b-container fluid="lg" class="mb-3 mt-3">
         <b-row class="mt-4">
           <b-col class="pt-3 pb-3" xs="12">
-            <div class="logo"></div>
-        </b-col>
-      </b-row>
-    </b-container>
+            <div @click="goHome" class="logo"></div>
+          </b-col>
+        </b-row>
+      </b-container>
     </div>
-<!--    <h1>Well Done {{ person['fields']['name'] }}</h1>-->
-    <span v-if="loggedIn">Yes</span>
-    <span v-else>No</span>
-    <b-btn @click="signOut">Sign Out</b-btn>
-    <div v-if=loggedIn class="container">
-      <div>
-        <p>Great Work! {{ name }} Your UNIHero score is
-          {{ uniheroStudent['fields']['APS_score'] }}</p>
-        <p>These results could get you into the following</p>
-
-     </div>
-      <ul class="list-group">
-        <li class="list-group-item" v-for="(item, index) in items" :key="index">
-          <div class="card">
-            <div class="card-body">
-              <h5 class="card-title">{{ item['fields']['University'] }}</h5>
-              <h5 class="card-title">{{ item['fields']['Faculties'] }}</h5>
-              <h5 class="card-title">{{ item['fields']['Qualification'] }}</h5>
-              <h5 class="card-title">NBT required? {{ item['fields']['NBT required?'] }}</h5>
-              <p>
-                {{ item['fields']['Requirements Comments'] }}
-              </p>
-              <a v-bind:href="item['fields']['Prospectus']"
-                 class="btn btn-info">Prospectus</a>
-              <a v-bind:href="item['fields']['Application']"
-                 class="btn btn-info">Application</a>
-              <hr class="my-4">
-              <div class="progress">
-                <div class="progress-bar progress-bar-striped bg-success"
-                     role="progressbar" style="width: 100%" aria-valuenow="100%"
-                     aria-valuemin="0" aria-valuemax="100"></div>
-              </div>
-            </div>
-          </div>
-        </li>
-      </ul>
-    </div>
-
-    <!-- Start of hardcode content -->
+    <div v-if="!loading">
+    <div v-if="loggedIn && emailVerified" class="container">
     <b-container fluid="md" class="mb-5 mt-5">
       <b-row class="mt-5 mb-3">
         <b-col xs="12" class="score">
-          <p class="heading">Great work! Your Unihero score is
-            44.</p>
+          <p class="heading">Great work!
+            Your Unihero score is {{ uniheroStudent['fields']['UNIHeroScore'] }}.</p>
         </b-col>
       </b-row>
-     <div class="list-board">
+      <div class="list-board">
         <b-row class="mb-5">
           <b-col xs="12" class="chat">
             <div class="chat-icon"></div>
@@ -73,7 +35,8 @@
               Sort by:</label>
             <div class="btn-group">
               <button class="btn btn-secondary btn-sm dropdown-toggle"
-                type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                      type="button" data-toggle="dropdown" aria-haspopup="true"
+                      aria-expanded="false">
                 Likelyhood of acceptance
               </button>
               <div class="dropdown-menu">
@@ -82,109 +45,37 @@
             </div>
           </b-col>
         </b-row>
-        <ul class="list-group">
-          <li class="list-group-item">
+        <ul v-if="!isFetching" class="list-group">
+          <li class="list-group-item" v-for="(item, index) in items" :key="index">
             <div class="card">
               <figure class="figure">
-                <img src="~@/assets/images/dashboard/vega-school-01.jpg"
-                class="figure-img img-fluid z-depth-1">
+                <img v-bind:src="item.fields.uni_image"
+                     class="figure-img img-fluid z-depth-1">
               </figure>
               <div class="card-body">
                 <div class="progress">
                   <div class="progress-bar progress-bar-striped bg-success"
-                      role="progressbar" style="width: 75%" aria-valuenow="75%"
-                      aria-valuemin="0" aria-valuemax="75"></div>
+                       role="progressbar" v-bind:style="'width:'
+                       + ((uniheroStudent.fields.UNIHeroScore - item.fields.APS_Equivalent)
+                       /(49 - item.fields.APS_Equivalent)) * 100 + '%'"
+                       v-bind:aria-valuenow="((uniheroStudent.fields.UNIHeroScore
+                       - item.fields.APS_Equivalent)
+                       /(49 - item.fields.APS_Equivalent)) * 100"
+                       aria-valuemin="0"
+                       v-bind:aria-valuemax="(49 - item.fields.APS_Equivalent)">
+                  </div>
                 </div>
-                <h5 class="card-title">BCom Brand Building &amp; Management</h5>
+                <h5 class="card-title">{{ item['fields']['Qualification'] }}</h5>
                 <p class="university">
-                  Vega School
+                  {{ item['fields']['University'] }}
                 </p>
-                <a class="btn btn-info btn-info-left">Website</a>
-                <a class="btn btn-info btn-info-right">Call Me Back</a>
-              </div>
-            </div>
-          </li>
-          <li class="list-group-item">
-            <div class="card">
-              <figure class="figure">
-                <img src="~@/assets/images/dashboard/vega-school-01.jpg"
-                class="figure-img img-fluid z-depth-1">
-              </figure>
-              <div class="card-body">
-                <div class="progress">
-                  <div class="progress-bar progress-bar-striped bg-success"
-                      role="progressbar" style="width: 75%" aria-valuenow="75%"
-                      aria-valuemin="0" aria-valuemax="75"></div>
+                <div class="cta">
+                  <a class="btn btn-info btn-info-left" v-bind:href="item['fields']['Prospectus']">
+                    Website</a>
+                  <a v-show="item['fields']['callback']" class="btn btn-info btn-info-right">
+                    Call Me Back
+                  </a>
                 </div>
-                <h5 class="card-title">BCom Brand Building &amp; Management</h5>
-                <p class="university">
-                  Vega School
-                </p>
-                <a class="btn btn-info btn-info-left">Website</a>
-                <a class="btn btn-info btn-info-right">Call Me Back</a>
-              </div>
-            </div>
-          </li>
-          <li class="list-group-item">
-            <div class="card">
-              <figure class="figure">
-                <img src="~@/assets/images/dashboard/vega-school-01.jpg"
-                class="figure-img img-fluid z-depth-1">
-              </figure>
-              <div class="card-body">
-                <div class="progress">
-                  <div class="progress-bar progress-bar-striped bg-success"
-                      role="progressbar" style="width: 75%" aria-valuenow="75%"
-                      aria-valuemin="0" aria-valuemax="75"></div>
-                </div>
-                <h5 class="card-title">BCom Brand Building &amp; Management</h5>
-                <p class="university">
-                  Vega School
-                </p>
-                <a class="btn btn-info btn-info-left">Website</a>
-                <a class="btn btn-info btn-info-right">Call Me Back</a>
-              </div>
-            </div>
-          </li>
-          <li class="list-group-item">
-            <div class="card">
-              <figure class="figure">
-                <img src="~@/assets/images/dashboard/vega-school-01.jpg"
-                class="figure-img img-fluid z-depth-1">
-              </figure>
-              <div class="card-body">
-                <div class="progress">
-                  <div class="progress-bar progress-bar-striped bg-success"
-                      role="progressbar" style="width: 75%" aria-valuenow="75%"
-                      aria-valuemin="0" aria-valuemax="75"></div>
-                </div>
-                <h5 class="card-title">BCom Brand Building &amp; Management</h5>
-                <p class="university">
-                  Vega School
-                </p>
-                <a class="btn btn-info btn-info-left">Website</a>
-                <a class="btn btn-info btn-info-right">Call Me Back</a>
-              </div>
-            </div>
-          </li>
-          <li class="list-group-item">
-            <div class="card">
-              <figure class="figure">
-                <img src="~@/assets/images/dashboard/vega-school-01.jpg"
-                class="figure-img img-fluid z-depth-1">
-              </figure>
-              <div class="card-body">
-                <div class="progress">
-                  <div class="progress-bar progress-bar-striped bg-success"
-                      role="progressbar" style="width: 75%" aria-valuenow="75%"
-                      aria-valuemin="0" aria-valuemax="75"></div>
-                </div>
-                <h5 class="card-title">BCom Brand Building &amp; Management</h5>
-                <p class="university">
-                  Vega School
-                </p>
-                <a class="btn btn-info btn-info-left">Website</a>
-                <a class="btn btn-info btn-info-right">Call Me Back</a>
               </div>
             </div>
           </li>
@@ -195,17 +86,43 @@
                   more suggestions?</div>
               </figure>
               <div class="card-body text-center">
-                <p class="info mt-2">Enter your marks so that we<br>
+                <p class="info mt-2">Enter your marks so that we
                   can better suggest more institutions
                   we believe will work for you!</p>
-                <a class="btn btn-info btn-info-center mt-2 mb-1">Unlock more </a>
+                <div class="cta cta-align-center">
+                  <a @click=loadItemsFromAT() class="btn btn-info btn-info-center mt-2 mb-1">
+                    Unlock more
+                  </a>
+                </div>
               </div>
             </div>
           </li>
         </ul>
-     </div>
+      </div>
     </b-container>
-    <!-- End of hardcode content -->
+    </div>
+      <!-- <div v-else>
+        <h2 class="fw-7 mb-5">Please verify your email!</h2>
+      </div> -->
+    <div class="container">
+    <b-container fluid="md" class="mb-5 mt-5">
+      <div class="list-board">
+        <div class="verify">
+          <h2 class="fw-7 mb-3">Oops, you haven’t verified your email address yet!?</h2>
+          <p class="fw-7">Verify it now to see the your awesome suggestions.</p>
+          <div class="verify-artwork mb-5">
+            <div class="one img"></div>
+          </div>
+          <router-link class="btn btn-light mb-2" to="">
+            Resend mail</router-link>
+          <br>
+          <router-link class="badge badge-info mt-3 mb-3" to="">
+            I need to update my email</router-link>
+        </div>
+      </div>
+    </b-container>
+    </div>
+    </div>
   </div>
 </template>
 
@@ -213,10 +130,9 @@
 import axios from 'axios';
 import * as firebase from 'firebase/app';
 import 'firebase/auth';
-// import myNavBar from '@/components/myNavBar.vue';
 
 export default {
-  name: 'Home',
+  name: 'dashboard',
   data() {
     return {
       items: [],
@@ -224,24 +140,28 @@ export default {
       email: '',
       emailVerified: false,
       loggedIn: false,
-      airtableRecordID: '',
       uniheroStudent: [],
+      isFetching: true,
+      uniheroStudentLocations: [],
+      uniheroStudentIndustry: [],
+      loading: true,
     };
   },
   components: {
-    // myNavBar,
   },
   created() {
     firebase.auth().onAuthStateChanged((user) => {
       this.loggedIn = !!user;
     });
     this.getUserProfile();
-    this.loadPersonATID();
   },
   mounted() {
-    this.loadItemsFromAT();
+    this.orderedLoadItemsFromAT();
   },
   methods: {
+    goHome() {
+      this.$router.replace({ name: 'Home' });
+    },
     getUserProfile() {
       const user = firebase.auth().currentUser;
       if (user != null) {
@@ -250,62 +170,48 @@ export default {
         this.emailVerified = user.emailVerified;
       }
     },
-    loadPersonATID() {
-      // Init variables
+    orderedLoadItemsFromAT() {
       const appId = 'appStZ5HUKWw7DEVw';
       const appKey = 'keyA8c9MG96tCi522';
+      const airtableConfig = { headers: { Authorization: `Bearer ${appKey}` } };
+      // Logged in users email address collected from Firebase
       const encodedUserEmail = encodeURIComponent(this.email);
+      // URLS for the AT person and university
       const atURLEmail = `https://api.airtable.com/v0/${appId}/person?fields%5B%5D=airtable_id&filterByFormula=search(%22${encodedUserEmail}%22%2C+email)`;
       const atURLPerson = `https://api.airtable.com/v0/${appId}/person/`;
-      const atConfig = { headers: { Authorization: `Bearer ${appKey}` } };
-      this.person = [];
-      this.persontwo = [];
-      axios.get(atURLEmail, atConfig).then((response) => {
-        this.person = response.data.records;
-        console.log(this.person);
-        this.airtableRecordID = this.person[0].id;
-        const atURLPersonNew = atURLPerson.concat(this.person[0].id);
-        console.log(atURLPersonNew);
-        axios.get(atURLPersonNew, atConfig).then((responsetwo) => {
-          this.persontwo = responsetwo.data;
-          this.uniheroStudent = responsetwo.data;
-          console.log(this.uniheroStudent);
-        }).catch((error) => {
-          console.log(error);
-        });
-      }).catch((error) => {
-        console.log(error);
-      });
-    },
-    loadPersonDetailsFromAT() {
-      // Init variables
-      const appId = 'appStZ5HUKWw7DEVw';
-      const appKey = 'keyA8c9MG96tCi522';
-      this.person = [];
-      console.log(`start of loadPersonDetailsFromAT method + ${this.airtableRecordID}`);
-      axios.get(
-        `https://api.airtable.com/v0/${appId}/person/${this.airtableRecordID}`,
-        {
-          headers: { Authorization: `Bearer ${appKey}` },
-        },
-      ).then((response) => {
-        this.person = response.data.records;
-        console.log(this.person);
-      }).catch((error) => {
-        console.log(error);
-      });
-    },
-    loadItemsFromAT() {
-      const appId = 'appStZ5HUKWw7DEVw';
-      const appKey = 'keyA8c9MG96tCi522';
-      const atURL = `https://api.airtable.com/v0/${appId}/university`;
-      const atConfig = { headers: { Authorization: `Bearer ${appKey}` } };
+      // UserATID is used for the record id
       this.items = [];
-      axios.get(atURL, atConfig).then((response) => {
-        this.items = response.data.records;
-      }).catch((error) => {
-        console.log(error);
-      });
+      axios
+        .get(atURLEmail, airtableConfig)
+        .then(({ data }) => {
+          const atURLPersonNew = atURLPerson.concat(data.records[0].id);
+          return axios.get(atURLPersonNew, airtableConfig);
+        }).then(({ data }) => {
+          this.uniheroStudent = data;
+          const atUniURL = `https://api.airtable.com/v0/appStZ5HUKWw7DEVw/university?filterByFormula=IF(AND({APS_Equivalent}<=${this.uniheroStudent.fields.UNIHeroScore},{Industry}="${this.uniheroStudent.fields.industry.trim()}",{Province}="${this.uniheroStudent.fields.location.trim()}"),"true")&maxRecords=5"`;
+          // this.uniheroStudentLocations = data.fields.location.split(',');
+          // this.uniheroStudentIndustry = data.fields.industry.split(',');
+          // for (let i = 0; i < this.uniheroStudentIndustry.length; i += 1) {
+          //   const str = `{Industry}="${this.uniheroStudentIndustry[i].trim()}",`;
+          //   atUniURL = atUniURL.concat(str);
+          // }
+          // atUniURL = atUniURL.concat('OR(');
+          // for (let i = 0; i < this.uniheroStudentLocations.length; i += 1) {
+          //   const str = `{Province}="${this.uniheroStudentLocations[i].trim()}",`;
+          //   atUniURL = atUniURL.concat(str);
+          // }
+          // atUniURL = atUniURL.slice(0, -1);
+          // atUniURL = atUniURL.concat(')),"true")&maxRecords=5');
+          encodeURI(atUniURL);
+          return axios.get(atUniURL, airtableConfig);
+        }).then((response) => {
+          this.items = response.data.records;
+          this.isFetching = false;
+        })
+        .catch((error) => {
+          console.log(error);
+        })
+        .finally(() => { this.loading = false; });
     },
     async signOut() {
       try {
@@ -328,9 +234,9 @@ $shadow-color: #c5cfd7;
 $fw-bold: 700;
 
 @mixin box-shadow($value) {
-    -webkit-box-shadow: $value;
-    -moz-box-shadow: $value;
-    box-shadow: $value;
+  -webkit-box-shadow: $value;
+  -moz-box-shadow: $value;
+  box-shadow: $value;
 }
 
 .logo-bar {
@@ -389,7 +295,7 @@ $fw-bold: 700;
         color: white;
         padding: .7em .9em;
         margin-bottom: 15px;
-        width: 77%;
+        width: 81%;
         border-radius: 6px;
         border-bottom-left-radius: 0;
         display: inline-flex;
@@ -423,11 +329,14 @@ $fw-bold: 700;
       }
       .col-form-label {
         margin-right: .8rem !important;
+        font-weight: inherit;
       }
       .dropdown-toggle{
         color: $color-navy-blue;
         background-color: white;
         border: 2px solid $color-navy-blue;
+        font-size: 0.875rem;
+        text-transform: inherit;
         padding: 0.15rem 0.5rem;
         border-radius: 5px;
         &:after {
@@ -468,7 +377,7 @@ $fw-bold: 700;
           position: relative;
           left: 0;
           .text {
-            left: 13% !important;
+            left: 8% !important;
           }
         }
       }
@@ -498,11 +407,13 @@ $fw-bold: 700;
             color: white;
             position: absolute;
             top: 28%;
-            left: 13%;
+            left: 11%;
           }
         }
         &-body {
           padding: .9rem;
+          min-height: 205px;
+          position: relative;
           .progress {
             background-color: white;
             border: 1px solid $color-turquoise;
@@ -518,6 +429,14 @@ $fw-bold: 700;
             font-size: .8em;
             font-weight: $fw-bold;
           }
+          .cta {
+            position: absolute;
+            bottom: 15px;
+            &-align-center {
+              left: 0;
+              right: 0;
+            }
+          }
           .info {
             font-size: .8em;
             font-weight: $fw-bold;
@@ -529,6 +448,7 @@ $fw-bold: 700;
             font-weight: $fw-bold;
           }
           .btn-info {
+            color: white;
             background-color: $color-navy-blue;
             border-color: $color-navy-blue;
             border-radius: .30rem;
@@ -548,13 +468,58 @@ $fw-bold: 700;
           }
         }
         &-title {
+          font-size: 1.15rem;
           font-weight: $fw-bold;
-          line-height: 1;
+          line-height: 1.2;
           margin-bottom: 0.45rem;
+          @media (max-width: 593px) {
+            font-size: 1rem;
+          }
+        }
+      }
+    }
+    .verify {
+      text-align: center;
+      margin: 5rem 0;
+      @media (max-width: 593px) {
+        margin: 0;
+      }
+      h2 {
+        @media (max-width: 593px) {
+          font-size: 1.5rem;
+        }
+      }
+      .fw-7 {
+        font-weight: $fw-bold;
+      }
+      &-artwork {
+        .img {
+          background-size: contain;
+          background-position: center;
+          background-repeat: no-repeat;
+          height: 420px;
+          @media (max-width: 593px) {
+            height: 200px;
+          }
+        }
+        .one {
+          background-image: url('~@/assets/images/verify-email-graphic.svg');
+          @media (max-width: 768px) {
+            background-position-y: center !important;
+          }
+        }
+      }
+      .btn {
+        text-transform: none;
+      }
+      .badge-info {
+        background-color: inherit;
+        color: $color-turquoise;
+        &:hover {
+          background-color: inherit;
         }
       }
     }
   }
 }
-
 </style>
