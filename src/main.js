@@ -9,6 +9,7 @@ import LoadScript from 'vue-plugin-load-script';
 import VueHead from 'vue-head';
 import axios from 'axios';
 import firebase from 'firebase/app';
+import VueGtag from 'vue-gtag';
 import App from './App.vue';
 import router from './router';
 
@@ -18,6 +19,13 @@ Vue.component('font-awesome-icon', FontAwesomeIcon);
 Vue.use(LoadScript);
 Vue.prototype.$axios = axios;
 Vue.config.productionTip = false;
+
+// gtag
+Vue.use(VueGtag, {
+  config: { id: 'UA-184162099-1' },
+  appName: 'Unihero',
+  pageTrackerScreenviewEnabled: true,
+}, router);
 
 // Firebase
 const firebaseConfig = {

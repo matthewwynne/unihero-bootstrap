@@ -22,7 +22,7 @@ const routes = [
   {
     path: '/get-started',
     name: 'GetStarted',
-    component: () => import(/* webpackChunkName: "getsStarted" */ '../views/GetStarted.vue'),
+    component: () => import(/* webpackChunkName: "getStarted" */ '../views/GetStarted.vue'),
     meta: { title: 'unihero - get started' },
   },
   {
@@ -34,20 +34,32 @@ const routes = [
   {
     path: '/login',
     name: 'Login',
-    component: () => import(/* webpackChunkName: "dashboard" */ '../views/Login.vue'),
+    component: () => import(/* webpackChunkName: "login" */ '../views/Login.vue'),
     meta: { title: 'unihero - login' },
   },
   {
     path: '/register',
     name: 'Register',
-    component: () => import(/* webpackChunkName: "dashboard" */ '../views/Register.vue'),
+    component: () => import(/* webpackChunkName: "register" */ '../views/Register.vue'),
     meta: { title: 'unihero - register' },
   },
   {
     path: '/finishsignup',
     name: 'FinishSignUp',
-    component: () => import(/* webpackChunkName: "dashboard" */ '../views/FinishSignUp.vue'),
+    component: () => import(/* webpackChunkName: "finishsignup" */ '../views/FinishSignUp.vue'),
     meta: { title: 'unihero - finish sign up' },
+  },
+  {
+    path: '/terms-and-conditions',
+    name: 'TermsConditions',
+    component: () => import(/* webpackChunkName: "terms" */ '../views/TermsConditions.vue'),
+    meta: { title: 'unihero - terms and conditions' },
+  },
+  {
+    path: '/contact',
+    name: 'ContactUs',
+    component: () => import(/* webpackChunkName: "contactus" */ '../views/ContactUs.vue'),
+    meta: { title: 'unihero - contact us' },
   },
 ];
 

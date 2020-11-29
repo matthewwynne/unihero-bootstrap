@@ -27,7 +27,7 @@
           <button type="Register" class="btn btn-info">Log in</button>
         </form>
         <p class="mt-2 bold">Don’t have a Unihero Account yet?
-          <router-link class="badge badge-info text-wrap" to="/getStarted">
+          <router-link class="badge badge-info text-wrap" to="/get-started">
           Create one here.</router-link>
         </p>
       </div>
@@ -71,7 +71,7 @@ export default {
 <style scoped lang="scss">
 $color-navy-blue: #0B0754;
 $color-turquoise: #00F7C1;
-$color-light-gray: #D0D2D3;
+$color-light-grey: #D0D2D3;
 $fw-bold: 700;
 
 .login {
@@ -120,7 +120,7 @@ $fw-bold: 700;
           font-weight: $fw-bold;
           font-size: .9rem;
           .label-link {
-            color: $color-light-gray;
+            color: $color-light-grey;
             padding: 0 6px;
           }
         }

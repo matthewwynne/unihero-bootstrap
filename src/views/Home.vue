@@ -1,13 +1,6 @@
 <template>
   <div class="home">
-    <b-container fluid="lg" class="landing landing-nav mt-4">
-      <b-row class="mb-5">
-        <b-col xs="12" class="landing-navbar">
-          <div @click="goHome" class="logo"></div>
-          <router-link class="btn btn-light mb-2" to="/login">Login</router-link>
-        </b-col>
-      </b-row>
-    </b-container>
+    <myNavBar></myNavBar>
     <br>
     <b-container fluid="lg" class="landing landing-row mb-3 mt-3">
       <b-row class="mb-5">
@@ -26,8 +19,8 @@
           <div class="chat">
             <div class="chat-bubble">It’s free and will take a minute! :)</div>
           </div>
-          <router-link class="btn btn-solid mb-2 btn-center" to="/get-started">
-          Get started
+          <router-link class="btn btn-solid mb-2 btn-center" to="/getStarted">
+            Get started
           </router-link>
         </b-col>
       </b-row>
@@ -38,7 +31,7 @@
           <p class="x-large">1: Share your results</p>
           <p class="x-large">2: Indicate your preferences</p>
           <p class="x-large mb-5">3: Explore your options</p>
-          <router-link class="btn btn-light mb-2" to="/get-started">Get started</router-link>
+          <router-link class="btn btn-light mb-2" to="/getStarted">Get started</router-link>
         </b-col>
         <b-col xs="12" lg="6" class="landing-artwork landing-phone">
           <div class="two img"></div>
@@ -50,17 +43,20 @@
         </b-col>
         <b-col xs="12" lg="6" class="landing-content p-lr-5">
           <h3 class="fw-7">How much does it cost?</h3>
-          <h4 class="fw-7">It’s free, and there's more!</h4>
+          <h4 class="fw-7">It’s free, and theres more!</h4>
           <p class="large mb-5">As part of the Unihero community you will get discounts on all
-             things study related, events, fashion, technology and even your degree!</p>
+            things study related, events, fashion, technology and even your degree!</p>
           <router-link class="btn btn-light mb-2" to="">Join our community</router-link>
         </b-col>
       </b-row>
     </b-container>
+    <myFooter></myFooter>
   </div>
 </template>
 
 <script>
+import myNavBar from '@/components/myNavBar.vue';
+import myFooter from '@/components/myFooter.vue';
 
 export default {
   name: 'Home',
@@ -69,11 +65,8 @@ export default {
     };
   },
   components: {
-  },
-  methods: {
-    goHome() {
-      this.$router.replace({ name: 'Home' });
-    },
+    myNavBar,
+    myFooter,
   },
 };
 
@@ -82,6 +75,7 @@ export default {
 <style scoped lang="scss">
 $color-navy-blue: #0B0754;
 $color-turquoise: #00F7C1;
+$color-light-grey: #E0E6EC;
 $fw-light: 300;
 
 .btn {
@@ -121,7 +115,9 @@ $fw-light: 300;
     }
   }
 }
-
+.home {
+  padding-bottom: 8rem;
+}
 .landing {
   overflow: hidden;
   &-nav {
@@ -131,6 +127,9 @@ $fw-light: 300;
   }
   &-navbar {
     position: relative;
+    @media (max-width: 593px) {
+      text-align: center;
+    }
     .logo {
       background-image: url('~@/assets/images/unihero-logo-01.svg');
       background-size: contain;
@@ -154,6 +153,29 @@ $fw-light: 300;
         right: 15px;
         padding: 0.1em 1em;
         top: 10px;
+      }
+      @media (max-width: 593px) {
+        top: 75px;
+        width: 130px;
+        display: inline;
+        font-size: 1.1em;
+        right: 50px;
+        padding: 0;
+      }
+      @media (max-width: 320px) {
+        right: 25px;
+      }
+      &-solid {
+        right: 275px;
+        @media (max-width: 768px) {
+          right: 145px;
+        }
+        @media (max-width: 593px) {
+          right: 200px;
+        }
+        @media (max-width: 320px) {
+          right: 165px;
+        }
       }
     }
   }

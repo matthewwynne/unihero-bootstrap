@@ -69,11 +69,14 @@
                 <p class="university">
                   {{ item['fields']['University'] }}
                 </p>
-                <a class="btn btn-info btn-info-left" v-bind:href="item['fields']['Prospectus']">
-                  Website</a>
-                <a v-show="item['fields']['callback']" class="btn btn-info btn-info-right">
-                  Call Me Back
+                <div class="cta">
+                  <a class="btn btn-info btn-info-left"
+                       v-bind:href="item['fields']['Prospectus']">
+                    Website</a>
+                  <a v-show="item['fields']['callback']" class="btn btn-info btn-info-right">
+                    Call Back
                 </a>
+                </div>
               </div>
             </div>
           </li>
@@ -98,7 +101,24 @@
     </b-container>
     </div>
       <div v-else>
-        <h2 class="fw-7 mb-5">Please verify your email!</h2>
+        <div class="container">
+          <b-container fluid="md" class="mb-5 mt-5">
+            <div class="list-board">
+              <div class="verify">
+                <h2 class="fw-7 mb-3">Oops, you haven’t verified your email address yet!?</h2>
+                <p class="fw-7">Verify it now to see the your awesome suggestions.</p>
+                <div class="verify-artwork mb-5">
+                  <div class="one img"></div>
+                </div>
+                <a class="btn btn-light mb-2" @click="forgotPassword">
+                  Resend mail</a>
+                <br>
+                <router-link class="badge badge-info mt-3 mb-3" to="/get-started">
+                  I need to update my email</router-link>
+              </div>
+            </div>
+          </b-container>
+        </div>
       </div>
     </div>
   </div>
@@ -191,6 +211,14 @@ export default {
         })
         .finally(() => { this.loading = false; });
     },
+    forgotPassword() {
+      const user = firebase.auth().currentUser;
+      user.sendEmailVerification().then(() => {
+        alert('Email verification sent!');
+      }).catch((error) => {
+        console.log(error);
+      });
+    },
     async signOut() {
       try {
         const data = firebase.auth().signOut();
@@ -273,7 +301,7 @@ $fw-bold: 700;
         color: white;
         padding: .7em .9em;
         margin-bottom: 15px;
-        width: 77%;
+        width: 81%;
         border-radius: 6px;
         border-bottom-left-radius: 0;
         display: inline-flex;
@@ -307,11 +335,14 @@ $fw-bold: 700;
       }
       .col-form-label {
         margin-right: .8rem !important;
+        font-weight: inherit;
       }
       .dropdown-toggle{
         color: $color-navy-blue;
         background-color: white;
         border: 2px solid $color-navy-blue;
+        font-size: 0.875rem;
+        text-transform: inherit;
         padding: 0.15rem 0.5rem;
         border-radius: 5px;
         &:after {
@@ -352,11 +383,10 @@ $fw-bold: 700;
           position: relative;
           left: 0;
           .text {
-            left: 13% !important;
+            left: 8% !important;
           }
         }
       }
-
       .card {
         @include box-shadow(0 0 .25em .25em rgba($shadow-color, .3));
         border: none;
@@ -382,11 +412,13 @@ $fw-bold: 700;
             color: white;
             position: absolute;
             top: 28%;
-            left: 13%;
+            left: 11%;
           }
         }
         &-body {
           padding: .9rem;
+          min-height: 205px;
+          position: relative;
           .progress {
             background-color: white;
             border: 1px solid $color-turquoise;
@@ -402,6 +434,14 @@ $fw-bold: 700;
             font-size: .8em;
             font-weight: $fw-bold;
           }
+          .cta {
+            position: absolute;
+            bottom: 15px;
+            &-align-center {
+              left: 0;
+              right: 0;
+            }
+          }
           .info {
             font-size: .8em;
             font-weight: $fw-bold;
@@ -413,6 +453,7 @@ $fw-bold: 700;
             font-weight: $fw-bold;
           }
           .btn-info {
+            color: white;
             background-color: $color-navy-blue;
             border-color: $color-navy-blue;
             border-radius: .30rem;
@@ -424,6 +465,7 @@ $fw-bold: 700;
             }
             &-right {
               float: right;
+              margin-left: 5px;
             }
             &:hover {
               background-color: $color-navy-blue-light;
@@ -432,9 +474,55 @@ $fw-bold: 700;
           }
         }
         &-title {
+          font-size: 1.15rem;
           font-weight: $fw-bold;
-          line-height: 1;
+          line-height: 1.2;
           margin-bottom: 0.45rem;
+          @media (max-width: 593px) {
+            font-size: 1rem;
+          }
+        }
+      }
+    }
+    .verify {
+      text-align: center;
+      margin: 5rem 0;
+      @media (max-width: 593px) {
+        margin: 0;
+      }
+      h2 {
+        @media (max-width: 593px) {
+          font-size: 1.5rem;
+        }
+      }
+      .fw-7 {
+        font-weight: $fw-bold;
+      }
+      &-artwork {
+        .img {
+          background-size: contain;
+          background-position: center;
+          background-repeat: no-repeat;
+          height: 420px;
+          @media (max-width: 593px) {
+            height: 200px;
+          }
+        }
+        .one {
+          background-image: url('~@/assets/images/verify-email-graphic.svg');
+          @media (max-width: 768px) {
+            background-position-y: center !important;
+          }
+        }
+      }
+      .btn {
+        text-transform: none;
+      }
+      .badge-info {
+        background-color: inherit;
+        color: $color-turquoise;
+        &:hover {
+          background-color: inherit;
         }
       }
     }
