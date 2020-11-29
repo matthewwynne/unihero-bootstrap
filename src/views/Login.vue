@@ -73,7 +73,7 @@ export default {
 <style scoped lang="scss">
 $color-navy-blue: #0B0754;
 $color-turquoise: #00F7C1;
-$color-light-gray: #D0D2D3;
+$color-light-grey: #D0D2D3;
 $fw-bold: 700;
 
 .login {
@@ -122,7 +122,7 @@ $fw-bold: 700;
           font-weight: $fw-bold;
           font-size: .9rem;
           .label-link {
-            color: $color-light-gray;
+            color: $color-light-grey;
             padding: 0 6px;
           }
         }

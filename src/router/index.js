@@ -38,6 +38,16 @@ const routes = [
     name: 'Register',
     component: () => import(/* webpackChunkName: "dashboard" */ '../views/Register.vue'),
   },
+  {
+    path: '/terms-and-conditions',
+    name: 'TermsConditions',
+    component: () => import(/* webpackChunkName: "terms" */ '../views/TermsConditions.vue'),
+  },
+  {
+    path: '/contact',
+    name: 'ContactUs',
+    component: () => import(/* webpackChunkName: "terms" */ '../views/ContactUs.vue'),
+  },
 ];
 
 const router = new VueRouter({

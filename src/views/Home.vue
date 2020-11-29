@@ -1,16 +1,8 @@
 <template>
   <div class="home">
-    <!-- <myNavBar></myNavBar> -->
+    <myNavBar></myNavBar>
     <!-- <carousel class="mb-5"/> -->
     <!-- <b-container fluid="md"><jumbotron/></b-container> -->
-    <b-container fluid="lg" class="landing landing-nav mt-4">
-      <b-row class="mb-5">
-        <b-col xs="12" class="landing-navbar">
-          <div class="logo"></div>
-          <router-link class="btn btn-light mb-2" to="/login">Login</router-link>
-        </b-col>
-      </b-row>
-    </b-container>
     <br>
     <b-container fluid="lg" class="landing landing-row mb-3 mt-3">
       <b-row class="mb-5">
@@ -60,21 +52,7 @@
         </b-col>
       </b-row>
     </b-container>
-    <!-- <b-container>
-      <br>
-      <b-row>
-        <b-col xs="12" lg="4">C 2020 - 2021</b-col>
-        <b-col xs="12" lg="4">Site map</b-col>
-        <b-col xs="12" lg="4">
-          <font-awesome-icon :icon="['fab', 'twitter-square']" size="3x"></font-awesome-icon>
-          <br>
-          <font-awesome-icon :icon="['fab', 'facebook-square']" size="3x"></font-awesome-icon>
-          <br>
-          <font-awesome-icon :icon="['fab', 'instagram-square']" size="3x"></font-awesome-icon>
-        </b-col>
-      </b-row>
-    </b-container>
-    <br> -->
+    <myFooter></myFooter>
   </div>
 </template>
 
@@ -82,7 +60,8 @@
 // @ is an alias to /src
 // import carousel from '@/components/carousel.vue';
 // import jumbotron from '@/components/jumbotron.vue';
-// import myNavBar from '@/components/myNavBar.vue';
+import myNavBar from '@/components/myNavBar.vue';
+import myFooter from '@/components/myFooter.vue';
 
 export default {
   name: 'Home',
@@ -93,7 +72,8 @@ export default {
   components: {
     // jumbotron,
     // carousel,
-    // myNavBar,
+    myNavBar,
+    myFooter,
   },
 };
 
@@ -102,6 +82,7 @@ export default {
 <style scoped lang="scss">
 $color-navy-blue: #0B0754;
 $color-turquoise: #00F7C1;
+$color-light-grey: #E0E6EC;
 $fw-light: 300;
 
 .btn {
@@ -151,6 +132,9 @@ $fw-light: 300;
   }
   &-navbar {
     position: relative;
+    @media (max-width: 593px) {
+      text-align: center;
+    }
     .logo {
       background-image: url('~@/assets/images/unihero-logo-01.svg');
       background-size: contain;
@@ -174,6 +158,29 @@ $fw-light: 300;
         right: 15px;
         padding: 0.1em 1em;
         top: 10px;
+      }
+      @media (max-width: 593px) {
+        top: 75px;
+        width: 130px;
+        display: inline;
+        font-size: 1.1em;
+        right: 50px;
+        padding: 0;
+      }
+      @media (max-width: 320px) {
+        right: 25px;
+      }
+      &-solid {
+        right: 275px;
+        @media (max-width: 768px) {
+          right: 145px;
+        }
+        @media (max-width: 593px) {
+          right: 200px;
+        }
+        @media (max-width: 320px) {
+          right: 165px;
+        }
       }
     }
   }
