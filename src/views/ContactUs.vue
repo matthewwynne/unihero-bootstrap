@@ -79,6 +79,9 @@ $fw-bold: 700;
 
 .contact {
   padding-bottom: 8rem;
+  @media (max-width: 593px) {
+    padding-bottom: 18rem;
+  }
   h1 {
     font-size: 2.3rem;
     font-weight: $fw-bold;

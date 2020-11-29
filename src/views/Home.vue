@@ -124,6 +124,9 @@ $fw-light: 300;
 }
 .home {
   padding-bottom: 8rem;
+  @media (max-width: 593px) {
+    padding-bottom: 18rem;
+  }
 }
 .landing {
   overflow: hidden;
