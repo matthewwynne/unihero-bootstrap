@@ -10,7 +10,7 @@
       </b-container>
     </div>
     <div v-if="!loading">
-    <div v-if=loggedIn class="container">
+    <div v-if="loggedIn && emailVerified" class="container">
     <b-container fluid="md" class="mb-5 mt-5">
       <b-row class="mt-5 mb-3">
         <b-col xs="12" class="score">
@@ -96,7 +96,10 @@
         </ul>
       </div>
     </b-container>
-    </div>>
+    </div>
+      <div v-else>
+        <h2 class="fw-7 mb-5">Please verify your email!</h2>
+      </div>
     </div>
   </div>
 </template>
