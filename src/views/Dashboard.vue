@@ -18,120 +18,120 @@
             Your Unihero score is {{ uniheroStudent['fields']['UNIHeroScore'] }}.</p>
         </b-col>
       </b-row>
-      <div class="list-board">
-        <b-row class="mb-5">
-          <b-col xs="12" class="chat">
-            <div class="chat-icon"></div>
-            <div class="chat-bubble">Here are some incredible degrees that
-              match your preferences &amp; marks!</div>
-          </b-col>
-        </b-row>
-        <b-row class="filter mt-3">
-          <b-col xs="12" lg="6">
-            <h5 class="fw-bold">Recommended degrees:</h5>
-          </b-col>
-          <b-col xs="12" lg="6" class="align-right">
-            <label for="colFormLabelSm" class="col-form-label col-form-label-sm">
-              Sort by:</label>
-            <div class="btn-group">
-              <button class="btn btn-secondary btn-sm dropdown-toggle"
-                      type="button" data-toggle="dropdown" aria-haspopup="true"
-                      aria-expanded="false">
-                Likelyhood of acceptance
-              </button>
-              <div class="dropdown-menu">
-                Option 1
+        <div class="list-board">
+          <b-row class="mb-5">
+            <b-col xs="12" class="chat">
+              <div class="chat-icon"></div>
+              <div class="chat-bubble">These incredible qualifications
+                match your preferences &amp; marks!</div>
+            </b-col>
+          </b-row>
+          <b-row class="filter mt-3">
+            <b-col xs="12" lg="6">
+              <h5 class="fw-bold">Recommended qualifications:</h5>
+            </b-col>
+            <b-col xs="12" lg="6" class="align-right">
+              <label for="colFormLabelSm" class="col-form-label col-form-label-sm">
+                Sort by:</label>
+              <div class="btn-group">
+                <button class="btn btn-secondary btn-sm dropdown-toggle"
+                        type="button" data-toggle="dropdown" aria-haspopup="true"
+                        aria-expanded="false">
+                  Likelyhood of acceptance
+                </button>
+                <div class="dropdown-menu">
+                  Option 1
+                </div>
               </div>
-            </div>
-          </b-col>
-        </b-row>
-        <ul class="list-group">
-          <li class="list-group-item" v-for="(item, index) in publicItems" :key="index">
-            <div class="card">
-              <figure class="figure">
-                <img v-bind:src="item.fields.uni_image"
-                     class="figure-img img-fluid z-depth-1">
-              </figure>
-              <div class="card-body">
-                <div class="progress">
-                  <div class="progress-bar progress-bar-striped bg-success"
-                       role="progressbar" v-bind:style="'width:'
+            </b-col>
+          </b-row>
+          <ul class="list-group">
+            <li class="list-group-item" v-for="(item, index) in publicItems" :key="index-1">
+              <div class="card">
+                <figure class="figure">
+                  <img v-bind:src="item.fields.uni_image"
+                       class="figure-img img-fluid z-depth-1">
+                </figure>
+                <div class="card-body">
+                  <div class="progress">
+                    <div class="progress-bar progress-bar-striped bg-success"
+                         role="progressbar" v-bind:style="'width:'
                        + ((uniheroStudent.fields.UNIHeroScore - item.fields.APS_Equivalent)
                        /(49 - item.fields.APS_Equivalent)) * 100 + '%'"
-                       v-bind:aria-valuenow="((uniheroStudent.fields.UNIHeroScore
+                         v-bind:aria-valuenow="((uniheroStudent.fields.UNIHeroScore
                        - item.fields.APS_Equivalent)
                        /(49 - item.fields.APS_Equivalent)) * 100"
-                       aria-valuemin="0"
-                       v-bind:aria-valuemax="(49 - item.fields.APS_Equivalent)">
+                         aria-valuemin="0"
+                         v-bind:aria-valuemax="(49 - item.fields.APS_Equivalent)">
+                    </div>
+                  </div>
+                  <h5 class="card-title">{{ item['fields']['Qualification'] }}</h5>
+                  <p class="university">
+                    {{ item['fields']['University'] }}
+                  </p>
+                  <div class="cta">
+                    <a class="btn btn-info btn-info-left"
+                       v-bind:href="item['fields']['Application']">
+                      Website</a>
+                    <a v-show="item['fields']['callback']" class="btn btn-info btn-info-right">
+                      Call Back
+                    </a>
                   </div>
                 </div>
-                <h5 class="card-title">{{ item['fields']['Qualification'] }}</h5>
-                <p class="university">
-                  {{ item['fields']['University'] }}
-                </p>
-                <div class="cta">
-                  <a class="btn btn-info btn-info-left"
-                     v-bind:href="item['fields']['Application']">
-                    Website</a>
-                  <a v-show="item['fields']['callback']" class="btn btn-info btn-info-right">
-                    Call Back
+              </div>
+            </li>
+            <li class="list-group-item" v-for="(item, index) in items" :key="index-2">
+              <div class="card">
+                <figure class="figure">
+                  <img v-bind:src="item.fields.uni_image"
+                       class="figure-img img-fluid z-depth-1">
+                </figure>
+                <div class="card-body">
+                  <div class="progress">
+                    <div class="progress-bar progress-bar-striped bg-success"
+                         role="progressbar" v-bind:style="'width:'
+                       + ((uniheroStudent.fields.UNIHeroScore - item.fields.APS_Equivalent)
+                       /(49 - item.fields.APS_Equivalent)) * 100 + '%'"
+                         v-bind:aria-valuenow="((uniheroStudent.fields.UNIHeroScore
+                       - item.fields.APS_Equivalent)
+                       /(49 - item.fields.APS_Equivalent)) * 100"
+                         aria-valuemin="0"
+                         v-bind:aria-valuemax="(49 - item.fields.APS_Equivalent)">
+                    </div>
+                  </div>
+                  <h5 class="card-title">{{ item['fields']['Qualification'] }}</h5>
+                  <p class="university">
+                    {{ item['fields']['University'] }}
+                  </p>
+                  <div class="cta">
+                    <a class="btn btn-info btn-info-left"
+                       v-bind:href="item['fields']['Application']">
+                      Website</a>
+                    <a v-show="item['fields']['callback']" class="btn btn-info btn-info-right">
+                      Call Back
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </li>
+            <li v-if="updateMarksClicked" class="list-group-item">
+              <div class="card">
+                <figure class="figure">
+                  <div class="text">Want to unlock<br>
+                    more suggestions?</div>
+                </figure>
+                <div class="card-body text-center">
+                  <p class="info mt-2">Enter your marks so that we<br>
+                    can better suggest more institutions
+                    we believe will work for you!</p>
+                  <a @click=updateMarks class="btn btn-info btn-info-center mt-2 mb-1">
+                    Unlock more
                   </a>
                 </div>
               </div>
-            </div>
-          </li>
-          <li class="list-group-item" v-for="(item, index) in items" :key="index">
-            <div class="card">
-              <figure class="figure">
-                <img v-bind:src="item.fields.uni_image"
-                     class="figure-img img-fluid z-depth-1">
-              </figure>
-              <div class="card-body">
-                <div class="progress">
-                  <div class="progress-bar progress-bar-striped bg-success"
-                       role="progressbar" v-bind:style="'width:'
-                       + ((uniheroStudent.fields.UNIHeroScore - item.fields.APS_Equivalent)
-                       /(49 - item.fields.APS_Equivalent)) * 100 + '%'"
-                       v-bind:aria-valuenow="((uniheroStudent.fields.UNIHeroScore
-                       - item.fields.APS_Equivalent)
-                       /(49 - item.fields.APS_Equivalent)) * 100"
-                       aria-valuemin="0"
-                       v-bind:aria-valuemax="(49 - item.fields.APS_Equivalent)">
-                  </div>
-                </div>
-                <h5 class="card-title">{{ item['fields']['Qualification'] }}</h5>
-                <p class="university">
-                  {{ item['fields']['University'] }}
-                </p>
-                <div class="cta">
-                  <a class="btn btn-info btn-info-left"
-                       v-bind:href="item['fields']['Application']">
-                    Website</a>
-                  <a v-show="item['fields']['callback']" class="btn btn-info btn-info-right">
-                    Call Back
-                </a>
-                </div>
-              </div>
-            </div>
-          </li>
-          <li class="list-group-item">
-            <div class="card">
-              <figure class="figure">
-                <div class="text">Want to unlock<br>
-                  more suggestions?</div>
-              </figure>
-              <div class="card-body text-center">
-                <p class="info mt-2">Enter your marks so that we<br>
-                  can better suggest more institutions
-                  we believe will work for you!</p>
-                <a @click=loadItemsFromAT() class="btn btn-info btn-info-center mt-2 mb-1">
-                  Unlock more
-                </a>
-              </div>
-            </div>
-          </li>
-        </ul>
-      </div>
+            </li>
+          </ul>
+        </div>
     </b-container>
     </div>
       <div v-else>
@@ -140,7 +140,7 @@
             <div class="list-board">
               <div class="verify">
                 <h2 class="fw-7 mb-3">Oops, you haven’t verified your email address yet!?</h2>
-                <p class="fw-7">Verify it now to see the your awesome suggestions.</p>
+                <p class="fw-7">Verify it now to see the your incredible qualifications.</p>
                 <div class="verify-artwork mb-5">
                   <div class="one img"></div>
                 </div>
@@ -155,7 +155,6 @@
         </div>
       </div>
     </div>
-    <myFooter></myFooter>
   </div>
 </template>
 
@@ -163,7 +162,6 @@
 import axios from 'axios';
 import * as firebase from 'firebase/app';
 import 'firebase/auth';
-import myFooter from '@/components/myFooter.vue';
 
 export default {
   name: 'dashboard',
@@ -177,14 +175,14 @@ export default {
       loggedIn: false,
       uniheroStudent: [],
       // isFetching: true,
-      uniheroStudentLocations: [],
-      uniheroStudentIndustry: [],
+      // uniheroStudentLocations: [],
+      // uniheroStudentIndustry: [],
       loadingPublics: true,
       loadingPrivates: true,
+      updateMarksClicked: true,
     };
   },
   components: {
-    myFooter,
   },
   created() {
     firebase.auth().onAuthStateChanged((user) => {
@@ -226,7 +224,7 @@ export default {
           return axios.get(atURLPersonNew, airtableConfig);
         }).then(({ data }) => {
           this.uniheroStudent = data;
-          const atUniURL = `https://api.airtable.com/v0/appStZ5HUKWw7DEVw/university?filterByFormula=IF(AND({APS_Equivalent}<=${this.uniheroStudent.fields.UNIHeroScore},{Industry}="${this.uniheroStudent.fields.industry.trim()}",{Province}="${this.uniheroStudent.fields.location.trim()}"),"true")&maxRecords=3"`;
+          const atUniURL = this.checkUpdatedMarksPublic();
           // this.uniheroStudentLocations = data.fields.location.split(',');
           // this.uniheroStudentIndustry = data.fields.industry.split(',');
           // for (let i = 0; i < this.uniheroStudentIndustry.length; i += 1) {
@@ -240,7 +238,7 @@ export default {
           // }
           // atUniURL = atUniURL.slice(0, -1);
           // atUniURL = atUniURL.concat(')),"true")&maxRecords=5');
-          encodeURI(atUniURL);
+          // encodeURI(atUniURL);
           return axios.get(atUniURL, airtableConfig);
         }).then((response) => {
           this.items = response.data.records;
@@ -269,22 +267,7 @@ export default {
           return axios.get(atURLPersonNew, airtableConfig);
         }).then(({ data }) => {
           this.uniheroStudent = data;
-          // const atUniURL = `https://api.airtable.com/v0/appStZ5HUKWw7DEVw/university?filterByFormula=IF(AND({APS_Equivalent}<=${this.uniheroStudent.fields.UNIHeroScore},{Industry}="${this.uniheroStudent.fields.industry.trim()}",{Province}="${this.uniheroStudent.fields.location.trim()}"),"true")&maxRecords=5"`;
-          const atUniURL = `https://api.airtable.com/v0/appStZ5HUKWw7DEVw/privates?filterByFormula=IF(AND({APS_Equivalent}<=${this.uniheroStudent.fields.UNIHeroScore},{Industry}="${this.uniheroStudent.fields.industry.trim()}",find("${this.uniheroStudent.fields.location.trim()}",Province)),"true")&maxRecords=3&sort[0][field]=University&sort[0][direction]=asc`;
-          // this.uniheroStudentLocations = data.fields.location.split(',');
-          // this.uniheroStudentIndustry = data.fields.industry.split(',');
-          // for (let i = 0; i < this.uniheroStudentIndustry.length; i += 1) {
-          //   const str = `{Industry}="${this.uniheroStudentIndustry[i].trim()}",`;
-          //   atUniURL = atUniURL.concat(str);
-          // }
-          // atUniURL = atUniURL.concat('OR(');
-          // for (let i = 0; i < this.uniheroStudentLocations.length; i += 1) {
-          //   const str = `{Province}="${this.uniheroStudentLocations[i].trim()}",`;
-          //   atUniURL = atUniURL.concat(str);
-          // }
-          // atUniURL = atUniURL.slice(0, -1);
-          // atUniURL = atUniURL.concat(')),"true")&maxRecords=5');
-          encodeURI(atUniURL);
+          const atUniURL = this.checkUpdatedMarksPrivate();
           return axios.get(atUniURL, airtableConfig);
         }).then((response) => {
           this.publicItems = response.data.records;
@@ -294,6 +277,35 @@ export default {
           console.log(error);
         })
         .finally(() => { this.loadingPrivates = false; });
+    },
+    checkUpdatedMarksPublic() {
+      let atUniURL;
+      if (this.uniheroStudent.fields.updated_marks === 'true') {
+        atUniURL = `https://api.airtable.com/v0/appStZ5HUKWw7DEVw/university?filterByFormula=IF(AND({APS_Equivalent}<=${this.uniheroStudent.fields.UNIHeroScore},{Industry}="${this.uniheroStudent.fields.industry.trim()}",{Province}="${this.uniheroStudent.fields.location.trim()}"),"true")`;
+        encodeURI(atUniURL);
+        this.updateMarksClicked = false;
+      } else {
+        atUniURL = `https://api.airtable.com/v0/appStZ5HUKWw7DEVw/university?filterByFormula=IF(AND({APS_Equivalent}<=${this.uniheroStudent.fields.UNIHeroScore},{Industry}="${this.uniheroStudent.fields.industry.trim()}",{Province}="${this.uniheroStudent.fields.location.trim()}"),"true")&maxRecords=3`;
+        encodeURI(atUniURL);
+        console.log(`here + ${atUniURL}`);
+      }
+      return atUniURL;
+    },
+    checkUpdatedMarksPrivate() {
+      let atUniURL;
+      if (this.uniheroStudent.fields.updated_marks === 'true') {
+        atUniURL = `https://api.airtable.com/v0/appStZ5HUKWw7DEVw/privates?filterByFormula=IF(AND({APS_Equivalent}<=${this.uniheroStudent.fields.UNIHeroScore},{Industry}="${this.uniheroStudent.fields.industry.trim()}",find("${this.uniheroStudent.fields.location.trim()}",Province)),"true")&sort[0][field]=University&sort[0][direction]=asc`;
+        encodeURI(atUniURL);
+        this.updateMarksClicked = false;
+      } else {
+        atUniURL = `https://api.airtable.com/v0/appStZ5HUKWw7DEVw/privates?filterByFormula=IF(AND({APS_Equivalent}<=${this.uniheroStudent.fields.UNIHeroScore},{Industry}="${this.uniheroStudent.fields.industry.trim()}",find("${this.uniheroStudent.fields.location.trim()}",Province)),"true")&maxRecords=3&sort[0][field]=University&sort[0][direction]=asc`;
+        encodeURI(atUniURL);
+        console.log(`here + ${atUniURL}`);
+      }
+      return atUniURL;
+    },
+    updateMarks() {
+      this.$router.replace({ name: 'CollectResults' });
     },
     forgotPassword() {
       const user = firebase.auth().currentUser;
@@ -327,6 +339,11 @@ $fw-bold: 700;
   -webkit-box-shadow: $value;
   -moz-box-shadow: $value;
   box-shadow: $value;
+}
+
+.landbot {
+  width: 100%;
+  height: 900px;
 }
 
 .logo-bar {

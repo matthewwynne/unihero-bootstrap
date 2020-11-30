@@ -61,6 +61,12 @@ const routes = [
     component: () => import(/* webpackChunkName: "contactus" */ '../views/ContactUs.vue'),
     meta: { title: 'unihero - contact us' },
   },
+  {
+    path: '/collect-results',
+    name: 'CollectResults',
+    component: () => import(/* webpackChunkName: "collectresults" */ '../views/CollectResults.vue'),
+    meta: { title: 'unihero - collect results' },
+  },
 ];
 
 const router = new VueRouter({
