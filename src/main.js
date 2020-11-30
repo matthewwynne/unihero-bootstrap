@@ -24,7 +24,7 @@ Vue.config.productionTip = false;
 Vue.use(VueGtag, {
   config: { id: 'UA-184162099-1' },
   appName: 'Unihero',
-  pageTrackerScreenviewEnabled: true,
+  pageTrackerScreenviewEnabled: false,
 }, router);
 
 // Firebase
