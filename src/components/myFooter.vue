@@ -5,8 +5,8 @@
       <b-row>
         <b-col xs="12" lg="5" md="4">
           <h5 class="mb-4">Legal</h5>
-          <router-link class="link-btn" to="/terms-and-conditions">
-            Term &amp; conditions</router-link>
+          <router-link class="link-btn" to="/terms-of-service">
+            Terms of Service</router-link>
         </b-col>
         <b-col xs="12" lg="5" md="4">
           <h5 class="mb-4">Help</h5>

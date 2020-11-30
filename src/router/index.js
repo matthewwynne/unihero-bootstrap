@@ -50,10 +50,10 @@ const routes = [
     meta: { title: 'unihero - finish sign up' },
   },
   {
-    path: '/terms-and-conditions',
-    name: 'TermsConditions',
-    component: () => import(/* webpackChunkName: "terms" */ '../views/TermsConditions.vue'),
-    meta: { title: 'unihero - terms and conditions' },
+    path: '/terms-of-service',
+    name: 'TermsOfService',
+    component: () => import(/* webpackChunkName: "terms" */ '../views/TermsOfService.vue'),
+    meta: { title: 'unihero - terms of service' },
   },
   {
     path: '/contact',
