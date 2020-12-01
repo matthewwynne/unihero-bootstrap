@@ -71,7 +71,7 @@
                   </p>
                   <div class="cta">
                     <a class="btn btn-info btn-info-left"
-                       v-bind:href="item['fields']['Application']">
+                       v-bind:href="item['fields']['Application']" target="_blank">
                       Website</a>
                     <a v-show="item['fields']['callback']" class="btn btn-info btn-info-right">
                       Call Back
@@ -105,7 +105,7 @@
                   </p>
                   <div class="cta">
                     <a class="btn btn-info btn-info-left"
-                       v-bind:href="item['fields']['Application']">
+                       v-bind:href="item['fields']['Application']" target="_blank">
                       Website</a>
                     <a v-show="item['fields']['callback']" class="btn btn-info btn-info-right">
                       Call Back
