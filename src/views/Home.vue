@@ -19,7 +19,7 @@
           <div class="chat">
             <div class="chat-bubble">It’s free and will take a minute! :)</div>
           </div>
-          <router-link class="btn btn-solid mb-2 btn-center" to="/getStarted">
+          <router-link class="btn btn-solid mb-2 btn-center" to="/get-started">
             Get started
           </router-link>
         </b-col>
@@ -31,7 +31,7 @@
           <p class="x-large">1: Share your results</p>
           <p class="x-large">2: Indicate your preferences</p>
           <p class="x-large mb-5">3: Explore your options</p>
-          <router-link class="btn btn-light mb-2" to="/getStarted">Get started</router-link>
+          <router-link class="btn btn-light mb-2" to="/get-started">Get started</router-link>
         </b-col>
         <b-col xs="12" lg="6" class="landing-artwork landing-phone">
           <div class="two img"></div>
@@ -43,7 +43,7 @@
         </b-col>
         <b-col xs="12" lg="6" class="landing-content p-lr-5">
           <h3 class="fw-7">How much does it cost?</h3>
-          <h4 class="fw-7">It’s free, and theres more!</h4>
+          <h4 class="fw-7">It’s free, and there's more!</h4>
           <p class="large mb-5">As part of the Unihero community you will get discounts on all
             things study related, events, fashion, technology and even your degree!</p>
           <router-link class="btn btn-light mb-2" to="">Join our community</router-link>

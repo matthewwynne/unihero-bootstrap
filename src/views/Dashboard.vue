@@ -37,7 +37,7 @@
                 <button class="btn btn-secondary btn-sm dropdown-toggle"
                         type="button" data-toggle="dropdown" aria-haspopup="true"
                         aria-expanded="false">
-                  Likelyhood of acceptance
+                  Likelihood of acceptance
                 </button>
                 <div class="dropdown-menu">
                   Option 1
