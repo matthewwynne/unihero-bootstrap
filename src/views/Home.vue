@@ -46,7 +46,7 @@
           <h4 class="fw-7">It’s free, and there's more!</h4>
           <p class="large mb-5">As part of the Unihero community you will get discounts on all
             things study related, events, fashion, technology and even your degree!</p>
-          <router-link class="btn btn-light mb-2" to="">Join our community</router-link>
+          <router-link class="btn btn-light mb-2" to="/get-started">Join our community</router-link>
         </b-col>
       </b-row>
     </b-container>

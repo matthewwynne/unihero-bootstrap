@@ -10,13 +10,11 @@ import VueHead from 'vue-head';
 import axios from 'axios';
 import firebase from 'firebase/app';
 import VueGtag from 'vue-gtag';
-import VueMeta from 'vue-meta';
 import App from './App.vue';
 import router from './router';
 
 library.add(faTwitterSquare, faFacebookSquare, faInstagramSquare);
 Vue.component('font-awesome-icon', FontAwesomeIcon);
-Vue.use(VueMeta);
 
 Vue.use(LoadScript);
 Vue.prototype.$axios = axios;

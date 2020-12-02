@@ -13,7 +13,7 @@ export default {
   name: 'CollectResults',
   data() {
     return {
-      email: 'matthewwynne@yahoo.com',
+      email: '',
       uniheroStudent: [],
     };
   },

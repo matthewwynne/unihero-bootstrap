@@ -7,20 +7,6 @@
 <script>
 export default {
   name: 'app',
-  metaInfo() {
-    return {
-      title: 'Unihero - Helping you decide',
-      meta: [
-        { name: 'description', content: 'Unihero helps you decide on qualifications that suit your location and industry preferences. If you are not sure on a qualification just yet, we\'ll show you whats out there.' },
-        { property: 'og:title', content: 'Unihero - Helping you decide' },
-        { property: 'og:image', content: 'https://www.unihero.co.za/unihero-hi.svg' },
-        { property: 'og:image:secure_url', content: 'https://www.unihero.co.za/unihero-hi.svg' },
-        { property: 'og:site_name', content: 'Unihero' },
-        { property: 'og:type', content: 'website' },
-        { name: 'robots', content: 'index,follow' },
-      ],
-    };
-  },
 };
 </script>
 

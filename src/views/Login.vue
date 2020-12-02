@@ -19,8 +19,8 @@
           </div>
           <div class="form-group">
             <label for="exampleInputPassword1">Password
-              <router-link class="label-link" to="/register">
-              forget?</router-link></label>
+              <a class="label-link" @click.prevent="forgotPassword">
+              forget?</a></label>
             <input type="password" v-model="password" class="form-control"
                   id="exampleInputPassword1">
           </div>
@@ -63,6 +63,13 @@ export default {
         console.log(err);
         alert(err);
       }
+    },
+    forgotPassword() {
+      firebase.auth().sendPasswordResetEmail(this.email).then(() => {
+        alert('Reset password link sent, please check you email');
+      }).catch((error) => {
+        alert(error);
+      });
     },
   },
 };
