@@ -74,7 +74,7 @@ $fw-bold: 700;
 .terms {
   padding-bottom: 8rem;
   @media (max-width: 593px) {
-    padding-bottom: 18rem;
+    padding-bottom: 20rem;
   }
   h1 {
     font-weight: $fw-bold;

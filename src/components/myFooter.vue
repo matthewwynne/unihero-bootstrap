@@ -5,11 +5,12 @@
       <b-row>
         <b-col xs="12" lg="5" md="4">
           <h5 class="mb-4">Legal</h5>
-          <router-link class="link-btn" to="">Term &amp; conditions</router-link>
+          <router-link class="link-btn" to="/terms-and-conditions">
+            Term &amp; conditions</router-link>
         </b-col>
         <b-col xs="12" lg="5" md="4">
           <h5 class="mb-4">Help</h5>
-          <router-link class="link-btn" to="">Contact us</router-link>
+          <router-link class="link-btn" to="/contact">Contact us</router-link>
         </b-col>
         <b-col xs="12" lg="2" md="3">
           <h5 class="mb-3">Socials</h5>
@@ -38,6 +39,9 @@ $color-light-grey: #E0E6EC;
   position: absolute;
   bottom: -18px;
   width: 100%;
+  @media (max-width: 593px) {
+    padding: 0 1.5rem;
+  }
   .footer{
     .col-md-4 {
       @media (max-width: 768px) {

@@ -257,7 +257,10 @@ $fw-bold: 700;
 
 .dashboard {
   background-color: #E0E6EC;
-
+  padding-bottom: 8rem;
+  @media (max-width: 593px) {
+    padding-bottom: 20rem;
+  }
   .score {
     .heading {
       font-size: 3em;

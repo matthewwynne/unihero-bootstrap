@@ -28,12 +28,12 @@
       </b-row>
       <br>
       <b-row class="mt-5 mb-5 wrap-reverse">
-        <b-col xs="12" lg="6" class="landing-content">
+        <b-col xs="12" lg="6" class="landing-content p-lr-3">
           <h3 class="fw-7">Ok, so how does Unihero work?</h3>
           <p class="x-large">1: Share your results</p>
           <p class="x-large">2: Indicate your preferences</p>
           <p class="x-large mb-5">3: Explore your options</p>
-          <router-link class="btn btn-light mb-2" to="/getStarted">Get started</router-link>
+          <router-link class="btn btn-light mb-2 m-lr-3" to="/getStarted">Get started</router-link>
         </b-col>
         <b-col xs="12" lg="6" class="landing-artwork landing-phone">
           <div class="two img"></div>
@@ -43,12 +43,12 @@
         <b-col xs="12" lg="6" class="landing-artwork">
           <div class="three img mt-3"></div>
         </b-col>
-        <b-col xs="12" lg="6" class="landing-content p-lr-5">
+        <b-col xs="12" lg="6" class="landing-content p-lr-3 p-lr-5 mt-3">
           <h3 class="fw-7">How much does it cost?</h3>
           <h4 class="fw-7">It’s free, and theres more!</h4>
           <p class="large mb-5">As part of the Unihero community you will get discounts on all
              things study related, events, fashion, technology and even your degree!</p>
-          <router-link class="btn btn-light mb-2" to="">Join our community</router-link>
+          <router-link class="btn btn-light mb-2 m-lr-1" to="">Join our community</router-link>
         </b-col>
       </b-row>
     </b-container>
@@ -96,6 +96,9 @@ $fw-light: 300;
   letter-spacing: .5px;
   @media (max-width: 768px) {
     font-size: 1.4em;
+  }
+  @media (max-width: 593px) {
+    font-size: 1.2em;
   }
   &-light {
     background: white;
@@ -247,6 +250,9 @@ $fw-light: 300;
     }
     h3 {
       margin-bottom: 2em;
+      @media (max-width: 593px) {
+        margin-bottom: 1.5em;
+      }
     }
     h4, h5 {
       margin-bottom: 1em;
@@ -255,26 +261,42 @@ $fw-light: 300;
       font-size: 1.3em;
       font-weight: $fw-light;
       line-height: 1.4;
+      @media (max-width: 593px) {
+        font-size: 1.2em;
+      }
     }
     .x-large {
       font-size: 1.5em;
       @media (max-width: 768px) {
         font-size: 1.2em;
       }
+      @media (max-width: 593px) {
+        font-size: 1.1em;
+      }
     }
   }
-
+  .p-lr-3 {
+    @media (max-width: 593px) {
+      padding: 0 4em !important;
+    }
+    @media (max-width: 320px) {
+      padding: 0 2em !important;
+    }
+  }
   .p-lr-5 {
     padding: 0 5em;
     @media (max-width: 768px) {
       padding: 0 2em;
     }
   }
-
+  .mt-3 {
+    @media (max-width: 593px) {
+      margin-top: -3rem !important;
+    }
+  }
   &-center {
     position: relative;
   }
-
   .chat {
     position: relative;
     left: 60px;
@@ -307,6 +329,17 @@ $fw-light: 300;
   .wrap-reverse {
     @media (max-width: 768px) {
       flex-wrap: wrap-reverse !important;
+      margin-top: -1rem !important;
+    }
+  }
+  .m-lr-3 {
+    @media (max-width: 593px) {
+      margin: 0 2rem;
+    }
+  }
+  .m-lr-1 {
+    @media (max-width: 593px) {
+      margin: 0 -10px;
     }
   }
 }
