@@ -294,13 +294,11 @@ export default {
     checkUpdatedMarksPrivate() {
       let atUniURL;
       if (this.uniheroStudent.fields.updated_marks === 'true') {
-        atUniURL =
-          `https://api.airtable.com/v0/appStZ5HUKWw7DEVw/privates?filterByFormula=IF(AND({APS_Equivalent}<=${this.uniheroStudent.fields.UNIHeroScore},{Industry}="${this.uniheroStudent.fields.industry.trim()}",find("${this.uniheroStudent.fields.location.trim()}",Province)),"true")&sort[0][field]=University&sort[0][direction]=desc`;
+        atUniURL = `https://api.airtable.com/v0/appStZ5HUKWw7DEVw/privates?filterByFormula=IF(AND({APS_Equivalent}<=${this.uniheroStudent.fields.UNIHeroScore},{Industry}="${this.uniheroStudent.fields.industry.trim()}",find("${this.uniheroStudent.fields.location.trim()}",Province)),"true")&sort[0][field]=University&sort[0][direction]=desc`;
         encodeURI(atUniURL);
         this.updateMarksClicked = false;
       } else {
-        atUniURL =
-          `https://api.airtable.com/v0/appStZ5HUKWw7DEVw/privates?filterByFormula=IF(AND({APS_Equivalent}<=${this.uniheroStudent.fields.UNIHeroScore},{Industry}="${this.uniheroStudent.fields.industry.trim()}",find("${this.uniheroStudent.fields.location.trim()}",Province)),"true")&maxRecords=3&sort[0][field]=University&sort[0][direction]=desc`;
+        atUniURL = `https://api.airtable.com/v0/appStZ5HUKWw7DEVw/privates?filterByFormula=IF(AND({APS_Equivalent}<=${this.uniheroStudent.fields.UNIHeroScore},{Industry}="${this.uniheroStudent.fields.industry.trim()}",find("${this.uniheroStudent.fields.location.trim()}",Province)),"true")&maxRecords=3&sort[0][field]=University&sort[0][direction]=desc`;
         encodeURI(atUniURL);
         console.log(`here + ${atUniURL}`);
       }
