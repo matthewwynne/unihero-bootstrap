@@ -1,5 +1,6 @@
 import Vue from 'vue';
 import VueMeta from 'vue-meta';
+import VueGtm from 'vue-gtm';
 import VueRouter from 'vue-router';
 import * as firebase from 'firebase/app';
 import 'firebase/auth';
@@ -89,6 +90,23 @@ router.beforeEach((to, from, next) => {
 router.beforeEach((to, from, next) => {
   document.title = to.meta.title;
   next();
+});
+
+Vue.use(VueGtm, {
+  id: 'GTM-KD8SP5J', // Your GTM single container ID or array of container ids ['GTM-xxxxxx', 'GTM-yyyyyy']
+  // queryParams: { // Add url query string when load gtm.js with GTM ID (optional)
+  //  gtm_auth:'AB7cDEf3GHIjkl-MnOP8qr',
+  //  gtm_preview:'env-4',
+  //  gtm_cookies_win:'x'
+  // },
+  defer: false, // defaults to false.
+  enabled: true, // defaults to true.
+  debug: true, // Whether or not display console logs debugs (optional)
+  loadScript: true, // Whether or not to load the GTM Script
+  vueRouter: router, // Pass the router instance to automatically sync with router (optional)
+  ignoredViews: ['/'], // Don't trigger events for specified router names (case insensitive)
+  // (optional)
+  trackOnNextTick: false, // Whether or not call trackView in Vue.nextTick
 });
 
 export default router;

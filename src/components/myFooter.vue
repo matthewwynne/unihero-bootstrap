@@ -39,6 +39,9 @@ $color-light-grey: #E0E6EC;
   position: absolute;
   bottom: -18px;
   width: 100%;
+  @media (max-width: 593px) {
+    padding: 0 1.5rem;
+  }
   .footer{
     .col-md-4 {
       @media (max-width: 768px) {
