@@ -8,6 +8,7 @@ import 'bootstrap-vue/dist/bootstrap-vue.css';
 import LoadScript from 'vue-plugin-load-script';
 import VueHead from 'vue-head';
 import axios from 'axios';
+import Hotjar from 'vue-hotjar';
 import firebase from 'firebase/app';
 import App from './App.vue';
 import router from './router';
@@ -38,6 +39,11 @@ Vue.use(BootstrapVue);
 Vue.use(IconsPlugin);
 // Vue Head
 Vue.use(VueHead);
+// Hotjar
+Vue.use(Hotjar, {
+  id: '2225119',
+  isProduction: true, // Hotjar Site ID
+});
 
 let app;
 firebase.auth().onAuthStateChanged((user) => {
